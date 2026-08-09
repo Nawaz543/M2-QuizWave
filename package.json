@@ -1,0 +1,22 @@
+{
+  "name": "m2-quizwave",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm --prefix client run dev",
+    "server": "npm --prefix server run dev",
+    "ec": "electron electron/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^43.3.0"
+  },
+  "dependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
