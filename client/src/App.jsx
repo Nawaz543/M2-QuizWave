@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import YouTubeSetup from "./pages/YouTubeSetup";
 
 function App() {
   const [message, setMessage] = useState("Connecting...");
@@ -15,10 +16,9 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <h1>YouTube Live Answer App</h1>
-      <p>{message}</p>
-    </div>
+    <>
+    <YouTubeSetup />
+    </>
   );
 }
 

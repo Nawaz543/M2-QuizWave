@@ -6,8 +6,11 @@ const connectDB = require("./config/db");
 
 const app = express();
 
+const youtubeRoutes = require("./routes/youtubeRoutes");
+
 app.use(cors());
 app.use(express.json());
+app.use("/api/youtube", youtubeRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({
