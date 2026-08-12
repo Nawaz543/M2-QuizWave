@@ -1,7 +1,13 @@
-import { useState } from "react";
-import "./YouTubeSetup.css";
+
+//  Window 1// 
+
+
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./styles/Window1.css";
 
 function YouTubeSetup() {
+  const navigate = useNavigate();
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [videoId, setVideoId] = useState("");
   const [videoTitle, setVideoTitle] = useState("");
@@ -104,8 +110,19 @@ function YouTubeSetup() {
 
   const handleNext = () => {
     console.log("Going to Window 2");
+ // Connection successful nahi hai
+  if (!videoTitle) {
+    return;
+  }
 
-    // Window 2 navigation later
+  navigate("/poll", {
+  state: {
+    connected: true,
+    videoId,
+    liveChatId,
+    videoTitle
+  }
+});
   };
 
   const trimTitle = (title, wordLimit ) => {

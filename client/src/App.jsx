@@ -1,24 +1,30 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import YouTubeSetup from "./pages/YouTubeSetup";
+import Window2 from "./pages/Window2";
 
 function App() {
-  const [message, setMessage] = useState("Connecting...");
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/health")
-      .then((res) => res.json())
-      .then((data) => {
-        setMessage(data.message);
-      })
-      .catch(() => {
-        setMessage("Backend connection failed");
-      });
-  }, []);
 
   return (
-    <>
-    <YouTubeSetup />
-    </>
+    <BrowserRouter>
+
+      <Routes>
+
+        {/* Window 1 */}
+        <Route
+          path="/"
+          element={<YouTubeSetup />}
+        />
+
+        {/* Window 2 */}
+        <Route
+          path="/poll"
+          element={<Window2 />}
+        />
+
+      </Routes>
+
+    </BrowserRouter>
   );
 }
 

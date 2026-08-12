@@ -1,0 +1,634 @@
+/* ================================
+   Poll Page
+================================ */
+
+.poll-page {
+  width: 100%;
+  height: 100vh;
+  min-height: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-sizing: border-box;
+  padding: 8px;
+
+  background: #0f1117;
+  color: #ffffff;
+
+  font-family: Arial, sans-serif;
+
+  overflow: hidden;
+}
+
+
+/* ================================
+   Card
+================================ */
+
+.poll-card {
+  width: 100%;
+  max-width: 300px;
+
+  box-sizing: border-box;
+
+  background: #171a22;
+
+  border: 1px solid #292e3a;
+  border-radius: 13px;
+
+  padding: 11px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35);
+
+  overflow: hidden;
+}
+
+
+/* ================================
+   Header
+================================ */
+
+.poll-header {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 8px;
+}
+
+
+/* Logo */
+
+.quizwave-logo {
+  width: 36px;
+  height: 36px;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
+
+  border: 1px solid #292e3a;
+}
+
+
+/* Header Content */
+
+.poll-header-content {
+  min-width: 0;
+}
+
+
+.poll-header-content h1 {
+  margin: 0;
+
+  font-size: 15px;
+  line-height: 1.2;
+
+  font-weight: 700;
+}
+
+
+.poll-header-content p {
+  margin: 2px;
+
+  color: #858c9c;
+
+  font-size: 9px;
+  line-height: 1.2;
+}
+
+
+/* ================================
+   Configuration Section
+================================ */
+
+.config-section {
+  margin-top: 6px;
+}
+
+
+.section-title {
+  margin-bottom: 4px;
+
+  color: #c5cad4;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+
+/* ================================
+   Poll Time
+================================ */
+
+.time-row {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 3px;
+}
+
+
+/* Circular Time Button */
+
+.time-circle {
+  width: 30px;
+  height: 30px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #303542;
+  border-radius: 50%;
+
+  background: #101219;
+
+  color: #858c9c;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+
+.time-circle:hover {
+  border-color: #ff0033;
+
+  color: #ffffff;
+}
+
+
+.time-circle.active {
+  background: #ff0033;
+
+  border-color: #ff0033;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 0 8px rgba(255, 0, 51, 0.25);
+}
+
+
+/* Custom + Button */
+
+.custom-circle {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+
+/* ================================
+   Custom Time Input
+================================ */
+
+.custom-time-wrapper {
+  width: 100%;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  margin-top: 5px;
+
+  padding: 0 8px;
+
+  background: #101219;
+
+  border: 1px solid #303542;
+
+  border-radius: 7px;
+
+  transition: 0.2s;
+}
+
+
+.custom-time-wrapper:focus-within {
+  border-color: #ff0033;
+
+  box-shadow:
+    0 0 0 2px rgba(255, 0, 51, 0.08);
+}
+
+
+/* Clock */
+
+.time-icon {
+  margin-right: 6px;
+
+  font-size: 10px;
+
+  flex-shrink: 0;
+}
+
+
+/* Input */
+
+.custom-time-wrapper input {
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-size: 10px;
+}
+
+
+.custom-time-wrapper input::placeholder {
+  color: #626978;
+}
+
+
+/* Seconds */
+
+.seconds-text {
+  color: #626978;
+
+  font-size: 9px;
+
+  flex-shrink: 0;
+}
+
+
+/* ================================
+   Option Type
+================================ */
+
+.option-select {
+  width: 100%;
+  height: 30px;
+
+  box-sizing: border-box;
+
+  padding: 0 7px;
+
+  border: 1px solid #303542;
+  border-radius: 7px;
+
+  outline: none;
+
+  background: #101219;
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+
+.option-select:hover {
+  border-color: #454b5a;
+}
+
+
+.option-select:focus {
+  border-color: #ff0033;
+
+  box-shadow:
+    0 0 0 2px rgba(255, 0, 51, 0.08);
+}
+
+
+.option-select option {
+  background: #171a22;
+
+  color: #ffffff;
+}
+
+
+/* ================================
+   All Questions
+================================ */
+
+.all-question-box {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 6px;
+
+  box-sizing: border-box;
+
+  margin-top: 7px;
+
+  padding: 7px 8px;
+
+  background: #11141b;
+
+  border: 1px solid #292e3a;
+
+  border-radius: 7px;
+}
+
+
+.all-question-box strong {
+  display: block;
+
+  color: #ffffff;
+
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+
+.all-question-box p {
+  margin: 2px 0 0;
+
+  color: #626978;
+
+  font-size: 8px;
+  line-height: 1.2;
+}
+
+
+/* ================================
+   Toggle
+================================ */
+
+.toggle-btn {
+  position: relative;
+
+  width: 30px;
+  height: 17px;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 20px;
+
+  background: #303542;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+
+.toggle-btn.on {
+  background: #ff0033;
+}
+
+
+.toggle-circle {
+  position: absolute;
+
+  top: 2px;
+  left: 2px;
+
+  width: 13px;
+  height: 13px;
+
+  background: #ffffff;
+
+  border-radius: 50%;
+
+  transition: 0.2s;
+}
+
+
+.toggle-btn.on .toggle-circle {
+  left: 15px;
+}
+
+
+/* ================================
+   Error
+================================ */
+
+.status-box {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  box-sizing: border-box;
+
+  margin-top: 7px;
+
+  padding: 6px 8px;
+
+  border-radius: 7px;
+
+  font-size: 9px;
+}
+
+
+.error-box {
+  background: rgba(255, 60, 60, 0.08);
+
+  border: 1px solid rgba(255, 60, 60, 0.18);
+
+  color: #ff7070;
+}
+
+
+.status-icon {
+  flex-shrink: 0;
+
+  font-size: 10px;
+}
+
+
+.status-box strong {
+  font-size: 9px;
+}
+
+
+.status-box p {
+  margin: 0;
+
+  font-size: 9px;
+}
+
+
+/* ================================
+   Start Poll
+================================ */
+
+.start-poll-btn {
+  width: 100%;
+  height: 34px;
+
+  margin-top: 9px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #ff0033;
+
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+
+.start-poll-btn:hover:not(:disabled) {
+  background: #e6002f;
+}
+
+
+.start-poll-btn:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+
+/* ================================
+   Spinner
+================================ */
+
+.spinner {
+  width: 9px;
+  height: 9px;
+
+  display: inline-block;
+
+  margin-right: 4px;
+
+  border: 2px solid rgba(255, 255, 255, 0.35);
+
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation: spin 0.7s linear infinite;
+
+  vertical-align: middle;
+}
+
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ================================
+   Small Window
+================================ */
+
+@media (max-width: 300px) {
+
+  .poll-page {
+    padding: 5px;
+  }
+
+
+  .poll-card {
+    padding: 11px;
+
+    border-radius: 11px;
+  }
+
+
+  .poll-header {
+    gap: 7px;
+
+    margin-bottom: 9px;
+  }
+
+
+  .quizwave-logo {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  .poll-header-content h1 {
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+
+  .poll-header-content p {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+
+  .time-row {
+    gap: 3px;
+  }
+
+
+  .time-circle {
+    width: 27px;
+    height: 27px;
+
+    font-size: 12px;
+  }
+
+
+  .custom-circle {
+    font-size: 13px;
+  }
+
+
+  .option-select {
+    height: 29px;
+
+    font-size: 9px;
+  }
+
+
+  .all-question-box {
+    padding: 12px;
+  }
+
+
+  .all-question-box strong {
+    font-size: 10px;
+  }
+
+
+  .all-question-box p {
+    font-size: 8.5px;
+    letter-spacing: 1px;
+  }
+
+
+  .start-poll-btn {
+    height: 32px;
+
+    font-size: 13px;
+  }
+
+}
