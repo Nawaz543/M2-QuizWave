@@ -51,71 +51,147 @@ useEffect(() => {
     }
   };
 
-  const handleStartPoll = async () => {
-    setError("");
+ const handleStartPoll = async () => {
+  setError("");
 
-    let finalTime;
+  let finalTime;
 
-    if (timeType === "custom") {
-      if (!customTime) {
-        setError("Please enter a custom time.");
-        return;
-      }
+  // ================================
+  // Validate Time
+  // ================================
 
-      if (Number(customTime) <= 0) {
-        setError("Poll time must be greater than 0.");
-        return;
-      }
-
-      finalTime = Number(customTime);
-    } else {
-      finalTime = Number(pollTime);
-    }
-
-    if (!finalTime || finalTime <= 0) {
-      setError("Please select a valid poll time.");
+  if (timeType === "custom") {
+    if (!customTime) {
+      setError("Please enter a custom time.");
       return;
     }
 
-    if (!optionType) {
-      setError("Please select an option type.");
+    if (Number(customTime) <= 0) {
+      setError("Poll time must be greater than 0.");
       return;
     }
 
-    const pollConfig = {
-      pollTime: finalTime,
-      timeType,
-      optionType,
-      forAllQuestions,
-    };
+    finalTime = Number(customTime);
+  } else {
+    finalTime = Number(pollTime);
+  }
 
-    console.log("Poll Configuration:", pollConfig);
+  if (!finalTime || finalTime <= 0) {
+    setError("Please select a valid poll time.");
+    return;
+  }
 
-    /*
-      Backend API baad mein connect karenge.
 
-      Example:
+  // ================================
+  // Validate Option Type
+  // ================================
 
-      const response = await fetch(
-        "http://localhost:5000/api/poll/start",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(pollConfig),
-        }
-      );
-    */
+  if (!optionType) {
+    setError("Please select an option type.");
+    return;
+  }
 
-    setLoading(true);
 
-    // Temporary
-    setTimeout(() => {
-      setLoading(false);
-      console.log("Poll Ready:", pollConfig);
-    }, 500);
+  // ================================
+  // Get Video ID
+  // ================================
+
+  const videoId = location.state?.videoId;
+
+  if (!videoId) {
+    setError("YouTube video information is missing.");
+    return;
+  }
+
+
+  // ================================
+  // Poll Configuration
+  // ================================
+
+  const pollConfig = {
+    pollTime: finalTime,
+    timeType,
+    optionType,
+    forAllQuestions,
+    questionNumber: 1,
   };
+
+
+  console.log("Starting Poll:", {
+    videoId,
+    pollConfig,
+  });
+
+
+  setLoading(true);
+
+
+  try {
+
+    // ================================
+    // Start Backend Chat Collection
+    // ================================
+
+    const response = await fetch(
+     "http://localhost:5000/api/youtube/poll/start",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          videoId,
+          pollConfig,
+        }),
+      }
+    );
+
+
+    const data = await response.json();
+
+
+    if (!response.ok) {
+      throw new Error(
+        data.message || "Failed to start poll."
+      );
+    }
+
+
+    // ================================
+    // Backend Successfully Started
+    // ================================
+
+    console.log("Poll Started:", data);
+
+
+    // ================================
+    // Go To Window 3
+    // ================================
+
+    navigate("/poll-engine", {
+      state: {
+        videoId,
+        pollConfig,
+        pollId: data.pollId,
+      },
+    });
+
+  } catch (error) {
+
+    console.error("Start Poll Error:", error);
+
+    setError(
+      error.message || "Unable to start poll."
+    );
+
+  } finally {
+
+    setLoading(false);
+
+  }
+};
 
 return (
   <div className="poll-page">

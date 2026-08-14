@@ -1,0 +1,311 @@
+/* ================================
+   Window 3 - Live Poll
+================================ */
+
+.poll-page {
+  width: 100%;
+  height: 100vh;
+  min-height: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-sizing: border-box;
+  padding: 14px;
+
+  background: #0f1117;
+  color: #ffffff;
+
+  font-family: Arial, sans-serif;
+
+  overflow: hidden;
+}
+
+
+/* ================================
+   Poll Card
+================================ */
+
+.poll-card {
+  width: 100%;
+  max-width: 650px;
+  max-height: 96vh;
+
+  padding: 22px;
+
+  box-sizing: border-box;
+
+  background: #181b24;
+
+  border: 1px solid #292e3a;
+  border-radius: 18px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+
+  overflow: hidden;
+}
+
+
+/* ================================
+   Header
+================================ */
+
+.poll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.poll-label {
+  margin: 0 0 1px;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+
+  color: #8b93a7;
+}
+
+.poll-header h1 {
+  margin: 0;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 7px 11px;
+
+  border-radius: 20px;
+
+  background: #20242e;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+}
+
+.status-dot.active {
+  background: #25d366;
+  box-shadow: 0 0 8px #25d366;
+}
+
+.status-dot.stopped {
+  background: #fc2605;
+}
+
+
+/* ================================
+   Timer
+================================ */
+
+.timer-section {
+  text-align: center;
+
+  padding: 8px 0 12px;
+}
+
+.timer-label {
+  margin: 0 0 1px;
+
+  color: #a08685;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.timer {
+  font-size: 48px;
+  line-height: 1;
+
+  font-weight: 800;
+}
+
+.timer span {
+  margin-left: 5px;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  color: #8c94a8;
+}
+
+.timer-line {
+  width: 100%;
+  height: 5px;
+
+  margin-top: 12px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  background: #292e39;
+}
+
+.timer-progress {
+  height: 100%;
+
+  border-radius: 10px;
+
+  background: #72fa5a;
+
+  transition: width 1s linear;
+}
+
+
+
+
+/* ================================
+   Options
+================================ */
+
+.options-section {
+  margin-top: 7px;
+}
+
+.option-label {
+  margin: 0 0 8px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  color: #858da0;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+  color: #1e87ff;
+}
+
+.option {
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 9px;
+
+  background: #20242e;
+
+  border: 1px solid #2c313d;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  transition: 0.2s ease;
+}
+
+.option:hover {
+  background: #001d5b;
+  transform: translateY(-1px);
+}
+
+
+/* ================================
+   Stop Button
+================================ */
+
+.stop-button {
+  width: 100%;
+  height: 43px;
+
+  margin-top: 16px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #111111;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.stop-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #e8e8e8;
+}
+
+.stop-button:disabled {
+  cursor: not-allowed;
+
+  background: #30343e;
+  color: #777e8d;
+}
+
+
+/* ================================
+   Small Screens
+================================ */
+
+@media (max-width: 500px) {
+
+  .poll-page {
+    padding: 8px;
+  }
+
+  .poll-card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .poll-header h1 {
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+
+  .timer {
+    font-size: 25px;
+  }
+
+  .chat-box {
+    height: 95px;
+  }
+
+  .option {
+    height: 20px;
+  }
+
+}
+
+
+.timer-progress {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 1s linear;
+
+  background: linear-gradient(
+    to left,
+    #9be9bb,
+    #2cea7b,
+    #00c853,
+    #9edd17,
+    #ffd600,
+    #ff9800,
+    #f44336,
+    #aa2920,
+    #7a0f07
+  );
+}
