@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./styles/Window3.css";
 
 function Window3() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const pollConfig = location.state?.pollConfig;
   const pollId = location.state?.pollId;
@@ -206,6 +207,17 @@ const handleStopTime = async () => {
     );
 
 
+// =================================
+// Open Window 4
+// =================================
+
+navigate("/window4", {
+  state: {
+    pollId,
+    result: data.result,
+  },
+});
+
   } catch (error) {
 
     console.error(
@@ -334,7 +346,7 @@ const handleStopTime = async () => {
           </p>
 
 
-          <div className="options">
+          <div className="select-options">
 
             {options.map((option) => (
 

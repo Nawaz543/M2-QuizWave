@@ -187,7 +187,7 @@
   color: #858da0;
 }
 
-.options {
+.select-options {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 9px;

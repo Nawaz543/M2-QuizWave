@@ -1,0 +1,263 @@
+/* ========================================
+   Window 4 - Poll Result
+======================================== */
+
+.window4 {
+  width: 100%;
+  height: 100vh;
+
+  box-sizing: border-box;
+  padding: 10px;
+
+  background: #0f1117;
+  color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  font-family: Arial, sans-serif;
+}
+
+
+/* ========================================
+   Header
+======================================== */
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-bottom: 6px;
+
+  border-bottom: 1px solid #292d38;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+.result-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* ========================================
+   Summary
+======================================== */
+
+.result-summary {
+  display:block;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 2px;
+
+  margin: 1px 0;
+}
+
+.result-summary div {
+  background: #191c24;
+
+  border-radius: 3px;
+
+  padding: 1px;
+
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.result-summary span {
+  font-size: 9px;
+  color: #8d93a1;
+}
+
+.result-summary strong {
+  font-size: 15px;
+  margin-top: 2px;
+}
+
+.result-summary .correct strong {
+  color: #35d07f;
+}
+
+.result-summary .incorrect strong {
+  color: #ff5c6c;
+}
+
+
+/* ========================================
+   Options
+======================================== */
+
+.options {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  flex: 1;
+  justify-content: center;
+}
+
+
+.option-row {
+  display: grid;
+
+  grid-template-columns:
+    18px
+    1fr
+    65px
+    15px;
+
+  align-items: center;
+
+  gap: 4px;
+
+  min-height: 22px;
+}
+
+
+/* Option Letter */
+
+.option-label {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+
+/* Bar */
+
+.bar-container {
+  height: 8px;
+
+  background: #292d38;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+
+  background: #4f7cff;
+
+  border-radius: 10px;
+
+  transition: width 0.3s ease;
+}
+
+
+/* Value */
+
+.option-value {
+  font-size: 9px;
+
+  color: #c7cad2;
+
+  text-align: right;
+
+  white-space: nowrap;
+}
+
+
+/* Correct */
+
+.correct-mark {
+  font-size: 12px;
+
+  color: #35d07f;
+
+  font-weight: bold;
+}
+
+
+/* ========================================
+   First Correct
+======================================== */
+
+.first-correct {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  background: #191c24;
+
+  border-radius: 5px;
+
+  padding: 4px 6px;
+
+  margin-top: 2px;
+}
+
+.trophy {
+  font-size: 20px;
+}
+
+.first-correct div {
+  display: flex;
+  flex-direction: column;
+}
+
+.first-correct small {
+  font-size: 8px;
+
+  color: #8d93a1;
+}
+
+.first-correct strong {
+  font-size: 11px;
+
+  margin-top: 1px;
+}
+
+
+/* ========================================
+   Buttons
+======================================== */
+
+.result-actions {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 8px;
+
+  margin-top: 2px;
+}
+
+.result-actions button {
+  border: none;
+
+  border-radius: 5px;
+
+  padding: 7px 4px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.end-btn {
+  background: #292d38;
+
+  color: #ffffff;
+}
+
+.next-que {
+  background: #4f7cff;
+
+  color: #ffffff;
+}
+
+.result-actions button:active {
+  transform: scale(0.97);
+}
