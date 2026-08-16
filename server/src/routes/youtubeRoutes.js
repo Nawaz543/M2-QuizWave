@@ -4,6 +4,8 @@ const crypto = require("crypto");
 
 const router = express.Router();
 
+const pollSessions = require("../store/pollSessions");
+
 router.post("/video", async (req, res) => {
   try {
     const { videoId } = req.body;
@@ -138,7 +140,8 @@ router.get("/chat", async (req, res) => {
 // POLL SESSION STORAGE
 // ========================================
 
-const pollSessions = new Map();
+// const pollSessions = new Map();
+
 // ========================================
 // GET VALID OPTIONS
 // ========================================
@@ -290,6 +293,7 @@ const extractOption = (message, optionType) => {
 
     return null;
   }
+
 
 
   // ========================================
@@ -799,5 +803,3 @@ const collectChatMessages = async (pollId) => {
 };
 
 module.exports = router;
-
-extractOption;
