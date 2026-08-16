@@ -524,6 +524,45 @@ collectChatMessages(pollId);
 });
 
 // ========================================
+// STOP POLL
+// ========================================
+
+router.post("/poll/:pollId/stop", (req, res) => {
+
+  const { pollId } = req.params;
+
+  const session = pollSessions.get(pollId);
+
+  // Poll session nahi mila
+  if (!session) {
+
+    return res.status(404).json({
+      success: false,
+      message: "Poll session not found"
+    });
+
+  }
+
+  // Backend polling stop
+  session.isRunning = false;
+
+  console.log(
+    `Poll ${pollId} stopped manually`
+  );
+
+  return res.json({
+
+    success: true,
+
+    message: "Poll stopped successfully",
+
+    pollId
+
+  });
+
+});
+
+// ========================================
 // COLLECT LIVE CHAT MESSAGES
 // ========================================
 

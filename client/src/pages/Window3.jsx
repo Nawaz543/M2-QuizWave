@@ -42,9 +42,66 @@ function Window3() {
   // Stop Time
   // ================================
 
-  const handleStopTime = () => {
+  // const handleStopTime = () => {
+  //   setIsRunning(false);
+  // };
+
+const handleStopTime = async () => {
+
+  if (!pollId) {
+
+    alert("Poll ID not found.");
+
+    return;
+  }
+
+  try {
+
+    const response = await fetch(
+      `http://localhost:5000/api/youtube/poll/${pollId}/stop`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    const data = await response.json();
+
+
+    if (!response.ok || !data.success) {
+
+      alert(
+        data.message || "Failed to stop poll"
+      );
+
+      return;
+    }
+
+
+    // Backend successfully stopped
     setIsRunning(false);
-  };
+
+
+    console.log(
+      `Poll ${pollId} stopped successfully`
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Stop Poll Error:",
+      error
+    );
+
+    alert(
+      "Unable to connect to server."
+    );
+
+  }
+
+};
 
 
   // ================================
