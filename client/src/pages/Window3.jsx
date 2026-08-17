@@ -8,6 +8,7 @@ function Window3() {
 
   const pollConfig = location.state?.pollConfig;
   const pollId = location.state?.pollId;
+  const videoId = location.state?.videoId;
 
   const [timeLeft, setTimeLeft] = useState(
     pollConfig?.pollTime || 15
@@ -213,8 +214,10 @@ const handleStopTime = async () => {
 
 navigate("/window4", {
   state: {
+    videoId,
     pollId,
     result: data.result,
+    pollConfig,
   },
 });
 

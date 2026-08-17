@@ -1,12 +1,15 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./styles/Window4.css";
 
 function Window4() {
-  // Temporary data
-  // Backend connect hone ke baad ye dynamic hoga
-    const location = useLocation();
-    const result = location.state?.result;
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const result = location.state?.result;
+  const pollId = location.state?.pollId;
+  const pollConfig = location.state?.pollConfig;
+    const videoId = location.state?.videoId;
 
   if (!result) {
     return (
@@ -18,34 +21,119 @@ function Window4() {
 
   const total = result.totalResponses;
 
+  // ========================================
+  // End Poll
+  // ========================================
+
+  const handleEndPoll = () => {
+    console.log("================================");
+    console.log("END POLL");
+    console.log("Poll ID:", pollId);
+    console.log("Question:", result?.questionNumber);
+    console.log("Poll ended successfully");
+    console.log("================================");
+  };
 
   // ========================================
-// End Poll
-// ========================================
+  // Next Question
+  // ========================================
 
-const handleEndPoll = () => {
-  console.log("================================");
-  console.log("END POLL");
-  console.log("Poll ID:", location.state?.pollId);
-  console.log("Question:", result?.questionNumber);
-  console.log("Poll ended successfully");
-  console.log("================================");
-};
+const handleNextQuestion = async () => {
+  const currentQuestion = result?.questionNumber || 1;
+  const nextQuestion = currentQuestion + 1;
 
-
-// ========================================
-// Next Question
-// ========================================
-
-const handleNextQuestion = () => {
   console.log("================================");
   console.log("NEXT QUESTION");
-  console.log("Current Question:", result?.questionNumber);
+  console.log("Current Question:", currentQuestion);
+  console.log("Next Question:", nextQuestion);
   console.log(
-    "Next Question:",
-    (result?.questionNumber || 0) + 1
+    "For All Questions:",
+    pollConfig?.forAllQuestions
   );
   console.log("================================");
+
+  // ========================================
+  // FOR ALL QUESTIONS = ON
+  // ========================================
+
+  if (pollConfig?.forAllQuestions === true) {
+    console.log("Starting new poll with same configuration...");
+
+    const newPollConfig = {
+      ...pollConfig,
+      questionNumber: nextQuestion,
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/youtube/poll/start",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            videoId,
+            pollConfig: newPollConfig,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Failed to start next poll."
+        );
+      }
+
+      console.log("New Poll Started:", data);
+
+      // ========================================
+      // Go directly to Window 3
+      // ========================================
+
+      navigate("/poll-engine", {
+        state: {
+          videoId,
+          pollConfig: newPollConfig,
+          pollId: data.pollId,
+        },
+      });
+
+    } catch (error) {
+      console.error(
+        "Next Poll Start Error:",
+        error
+      );
+
+      alert(
+        error.message ||
+        "Unable to start next poll."
+      );
+    }
+
+    return;
+  }
+
+  // ========================================
+  // FOR ALL QUESTIONS = OFF
+  // ========================================
+
+  console.log(
+    "Going to Window 2 for new configuration..."
+  );
+
+  navigate("/poll", {
+    state: {
+      connected: true,
+      videoId,
+      questionNumber: nextQuestion,
+      previousResult: result,
+    },
+  });
 };
 
   return (
@@ -57,77 +145,77 @@ const handleNextQuestion = () => {
         <span>Q.{result.questionNumber}</span>
       </div>
 
-    <div className="result-stats">
-      {/* Summary */}
-      <div className="result-summary">
+      <div className="result-stats">
 
-        <div>
-          <span>Total</span>
-          <strong>{result.totalResponses}</strong>
+        {/* Summary */}
+        <div className="result-summary">
+
+          <div>
+            <span>Total</span>
+            <strong>{result.totalResponses}</strong>
+          </div>
+
+          <div className="correct">
+            <span>Correct</span>
+            <strong>{result.correctCount}</strong>
+          </div>
+
+          <div className="incorrect">
+            <span>Wrong</span>
+            <strong>{result.incorrectCount}</strong>
+          </div>
+
         </div>
 
-        <div className="correct">
-          <span>Correct</span>
-          <strong>{result.correctCount}</strong>
-        </div>
+        {/* Options */}
+        <div className="options">
 
-        <div className="incorrect">
-          <span>Wrong</span>
-          <strong>{result.incorrectCount}</strong>
-        </div>
+          {Object.entries(result.optionStats).map(
+            ([option, count]) => {
 
+              const percentage =
+                total > 0
+                  ? Math.round((count / total) * 100)
+                  : 0;
+
+              const isCorrect =
+                option === result.normalizedCorrectAnswer;
+
+              return (
+                <div className="option-row" key={option}>
+
+                  <div className="option-label">
+                    {option}
+                  </div>
+
+                  <div className="bar-container">
+
+                    <div
+                      className="bar"
+                      style={{
+                        width: `${percentage}%`,
+                      }}
+                    />
+
+                  </div>
+
+                  <div className="option-value">
+                    {count} ({percentage}%)
+                  </div>
+
+                  {isCorrect && (
+                    <span className="correct-mark">
+                      ✓
+                    </span>
+                  )}
+
+                </div>
+              );
+            }
+          )}
+
+        </div>
       </div>
-
-
-      {/* Options */}
-      <div className="options">
-
-        {Object.entries(result.optionStats).map(
-          ([option, count]) => {
-
-            const percentage =
-              total > 0
-                ? Math.round((count / total) * 100)
-                : 0;
-
-            const isCorrect =
-              option === result.normalizedCorrectAnswer;
-
-            return (
-              <div className="option-row" key={option}>
-
-                <div className="option-label">
-                  {option}
-                </div>
-
-                <div className="bar-container">
-
-                  <div
-                    className="bar"
-                    style={{
-                      width: `${percentage}%`,
-                    }}
-                  />
-
-                </div>
-
-                <div className="option-value">
-                  {count} ({percentage}%)
-                </div>
-
-                {isCorrect && (
-                  <span className="correct-mark">
-                    ✓
-                  </span>
-                )}
-
-              </div>
-            );
-          }
-        )}
-
-      </div>
-    </div>
 
       {/* First Correct */}
       <div className="first-correct">
@@ -147,15 +235,20 @@ const handleNextQuestion = () => {
 
       </div>
 
-
       {/* Buttons */}
       <div className="result-actions">
 
-        <button className="end-btn" onClick={handleEndPoll}>
+        <button
+          className="end-btn"
+          onClick={handleEndPoll}
+        >
           End Poll
         </button>
 
-        <button className="next-que" onClick={handleNextQuestion}>
+        <button
+          className="next-que"
+          onClick={handleNextQuestion}
+        >
           Next Question →
         </button>
 

@@ -113,7 +113,7 @@ useEffect(() => {
     timeType,
     optionType,
     forAllQuestions,
-    questionNumber: 1,
+    questionNumber: location.state?.questionNumber || 1,
   };
 
 
