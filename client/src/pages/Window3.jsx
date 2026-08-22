@@ -9,6 +9,8 @@ function Window3() {
   const pollConfig = location.state?.pollConfig;
   const pollId = location.state?.pollId;
   const videoId = location.state?.videoId;
+  const quizSessionId = location.state?.quizSessionId;
+  
 
   const [timeLeft, setTimeLeft] = useState(
     pollConfig?.pollTime || 15
@@ -218,6 +220,7 @@ navigate("/window4", {
     pollId,
     result: data.result,
     pollConfig,
+    quizSessionId,
   },
 });
 

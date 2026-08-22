@@ -12,6 +12,7 @@ function YouTubeSetup() {
   const [videoId, setVideoId] = useState("");
   const [videoTitle, setVideoTitle] = useState("");
   const [liveChatId, setLiveChatId] = useState("");
+  const [quizSessionId, setQuizSessionId] = useState("");
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -59,6 +60,7 @@ function YouTubeSetup() {
     setVideoId("");
     setVideoTitle("");
     setLiveChatId("");
+    setQuizSessionId("");
 
     if (!youtubeUrl.trim()) {
       setError("Please enter a YouTube Live URL");
@@ -98,6 +100,7 @@ function YouTubeSetup() {
       setVideoId(data.videoId);
       setVideoTitle(data.title);
       setLiveChatId(data.activeLiveChatId);
+      setQuizSessionId(data.quizSessionId);
 
       setSuccess("YouTube Live connected");
     } catch (error) {
@@ -120,7 +123,8 @@ function YouTubeSetup() {
     connected: true,
     videoId,
     liveChatId,
-    videoTitle
+    videoTitle,
+    quizSessionId
   }
 });
   };

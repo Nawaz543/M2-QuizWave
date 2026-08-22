@@ -8,11 +8,13 @@ const app = express();
 
 const youtubeRoutes = require("./routes/youtubeRoutes");
 const pollResultRoutes = require("./routes/pollResultRoutes");
+const quizSessionRoutes = require("./routes/quizSessionRoutes");
 
 app.use(cors());
 app.use(express.json());
 app.use("/api/youtube", youtubeRoutes);
 app.use("/api/poll-result", pollResultRoutes);
+app.use( "/api/quiz-session", quizSessionRoutes);
 
 
 app.get("/api/health", (req, res) => {

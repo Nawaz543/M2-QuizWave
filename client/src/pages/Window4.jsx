@@ -10,6 +10,8 @@ function Window4() {
   const pollId = location.state?.pollId;
   const pollConfig = location.state?.pollConfig;
     const videoId = location.state?.videoId;
+    const quizSessionId = location.state?.quizSessionId;
+   
 
   if (!result) {
     return (
@@ -25,14 +27,65 @@ function Window4() {
   // End Poll
   // ========================================
 
-  const handleEndPoll = () => {
+ const handleEndPoll = async () => {
+
+  try {
+
     console.log("================================");
-    console.log("END POLL");
-    console.log("Poll ID:", pollId);
-    console.log("Question:", result?.questionNumber);
-    console.log("Poll ended successfully");
+    console.log("END QUIZ");
+    console.log("Quiz Session ID:", quizSessionId);
     console.log("================================");
-  };
+
+    if (!quizSessionId) {
+      alert("Quiz Session ID is missing.");
+      return;
+    }
+
+    const response = await fetch(
+      `http://localhost:5000/api/quiz-session/${quizSessionId}/complete`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.message ||
+        "Failed to complete quiz."
+      );
+    }
+
+    console.log(
+      "Quiz completed successfully:",
+      data
+    );
+
+   navigate("/window5", {
+  state: {
+    quizSessionId
+  }
+});
+
+  } catch (error) {
+
+    console.error(
+      "End Quiz Error:",
+      error
+    );
+
+    alert(
+      error.message ||
+      "Unable to end quiz."
+    );
+
+  }
+
+};
 
   // ========================================
   // Next Question
@@ -77,6 +130,7 @@ const handleNextQuestion = async () => {
           body: JSON.stringify({
             videoId,
             pollConfig: newPollConfig,
+            quizSessionId,
           }),
         }
       );
@@ -100,6 +154,7 @@ const handleNextQuestion = async () => {
           videoId,
           pollConfig: newPollConfig,
           pollId: data.pollId,
+          quizSessionId,
         },
       });
 

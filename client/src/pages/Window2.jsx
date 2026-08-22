@@ -97,11 +97,16 @@ useEffect(() => {
   // ================================
 
   const videoId = location.state?.videoId;
+  const quizSessionId = location.state?.quizSessionId;
 
   if (!videoId) {
     setError("YouTube video information is missing.");
     return;
   }
+  if (!quizSessionId) {
+  setError("Quiz session information is missing.");
+  return;
+}
 
 
   // ================================
@@ -144,6 +149,7 @@ useEffect(() => {
         body: JSON.stringify({
           videoId,
           pollConfig,
+           quizSessionId,
         }),
       }
     );
@@ -175,6 +181,7 @@ useEffect(() => {
         videoId,
         pollConfig,
         pollId: data.pollId,
+         quizSessionId,
       },
     });
 

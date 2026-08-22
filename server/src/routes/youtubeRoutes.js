@@ -5,6 +5,8 @@ const crypto = require("crypto");
 const router = express.Router();
 
 const pollSessions = require("../store/pollSessions");
+const QuizSession = require("../models/QuizSession");
+const Poll = require("../models/Poll");
 
 router.post("/video", async (req, res) => {
   try {
@@ -63,11 +65,26 @@ router.post("/video", async (req, res) => {
       });
     }
 
+    // ========================================
+// CREATE QUIZ SESSION
+// ========================================
+
+const quizSession = await QuizSession.create({
+  videoId,
+   videoTitle: video.snippet.title,
+});
+
+console.log(
+  "Quiz Session Created:",
+  quizSession._id
+);
+
 
     res.json({
       success: true,
       message: "Live stream verified",
       videoId,
+      quizSessionId: quizSession._id,
       title: video.snippet.title,
       activeLiveChatId,
       actualStartTime: liveDetails.actualStartTime || null,
@@ -326,10 +343,16 @@ router.post("/poll/start", async (req, res) => {
 
     const {
       videoId,
-      pollConfig
+      pollConfig,
+      quizSessionId
     } = req.body;
 
-
+if (!quizSessionId) {
+  return res.status(400).json({
+    success: false,
+    message: "Quiz Session ID is required"
+  });
+}
     // Check video ID
     if (!videoId) {
       return res.status(400).json({
@@ -351,6 +374,7 @@ router.post("/poll/start", async (req, res) => {
     const {
       pollTime,
       optionType,
+      forAllQuestions,
       questionNumber = 1
     } = pollConfig;
 
@@ -416,6 +440,33 @@ router.post("/poll/start", async (req, res) => {
     const activeLiveChatId =
       liveDetails.activeLiveChatId;
 
+      // ========================================
+// UPDATE QUIZ SESSION
+// ========================================
+
+const quizSession = await QuizSession.findByIdAndUpdate(
+  quizSessionId,
+  {
+    pollTime: Number(pollTime),
+    optionType,
+    forAllQuestions
+  },
+  {
+    new: true
+  }
+);
+
+if (!quizSession) {
+  return res.status(404).json({
+    success: false,
+    message: "Quiz session not found"
+  });
+}
+
+console.log(
+  "Quiz Session Updated:",
+  quizSession._id
+);
 
     // ========================================
     // Create Poll ID
@@ -434,6 +485,36 @@ router.post("/poll/start", async (req, res) => {
       startTime + Number(pollTime) * 1000;
 
 
+      // ========================================
+// CREATE POLL DOCUMENT IN DATABASE
+// ========================================
+
+const poll = await Poll.create({
+  quizSessionId,
+
+  pollId,
+
+  videoId,
+
+  questionNumber,
+
+  pollTime: Number(pollTime),
+
+  optionType,
+
+  startTime: new Date(startTime),
+
+  endTime: new Date(endTime),
+
+  status: "active"
+});
+
+console.log(
+  "Poll saved to MongoDB:",
+  poll._id
+);
+
+
     // ========================================
     // Create Poll Session
     // ========================================
@@ -443,6 +524,7 @@ router.post("/poll/start", async (req, res) => {
       pollId,
 
       videoId,
+      quizSessionId,
 
       activeLiveChatId,
 

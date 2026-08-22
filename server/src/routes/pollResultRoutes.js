@@ -14,8 +14,10 @@ const express = require("express");
 
 const router = express.Router();
 
-const pollSessions =
-  require("../store/pollSessions");
+const pollSessions = require("../store/pollSessions");
+const Poll = require("../models/Poll");
+const CorrectResponse = require("../models/CorrectResponse");
+const QuizSession = require("../models/QuizSession");
 
 
 
@@ -85,7 +87,7 @@ const normalizeAnswer = (answer, optionType) => {
 
 router.post(
   "/:pollId/result",
-  (req, res) => {
+  async  (req, res) => {
 
     try {
 
@@ -310,6 +312,102 @@ router.post(
             participant.correct
         );
 
+// ========================================
+// TOP 5 CORRECT PARTICIPANTS
+// ========================================
+
+const sortedCorrectResponses =
+  [...correctResponses].sort(
+    (a, b) =>
+      new Date(a.timestamp) -
+      new Date(b.timestamp)
+  );
+
+
+// ========================================
+// Assign Rank
+// ========================================
+
+const rankedCorrectResponses =
+  sortedCorrectResponses.map(
+    (participant, index) => {
+
+      const rank =
+        index < 5
+          ? index + 1
+          : -1;
+
+      return {
+        ...participant,
+        rank
+      };
+
+    }
+  );
+
+  // ========================================
+// SAVE CORRECT RESPONSES
+// ========================================
+
+const correctResponseDocuments =
+  rankedCorrectResponses.map(
+    (participant) => {
+
+      const answeredAt =
+        new Date(participant.timestamp);
+
+      const pollStartTime =
+        new Date(session.startTime);
+
+      const responseTime =
+        Number(
+          (
+            (answeredAt.getTime() -
+              pollStartTime.getTime()) /
+            1000
+          ).toFixed(2)
+        );
+
+      return {
+        quizSessionId:
+          session.quizSessionId,
+
+        pollId,
+
+        questionNumber:
+          session.questionNumber,
+
+        userId:
+          participant.userId,
+
+        username:
+          participant.username,
+
+        answer:
+          participant.answer,
+
+        answeredAt,
+
+        responseTime,
+
+        rank:
+          participant.rank
+      };
+
+    }
+  );
+
+  if (correctResponseDocuments.length > 0) {
+
+  await CorrectResponse.insertMany(
+    correctResponseDocuments
+  );
+
+  console.log(
+    `Saved ${correctResponseDocuments.length} correct responses`
+  );
+
+}
 
       let firstCorrectParticipant =
         null;
@@ -372,11 +470,98 @@ router.post(
 
         optionStats,
 
-        participants
+        participants,
+
+        top5Participants:
+  rankedCorrectResponses.filter(
+    (participant) =>
+      participant.rank !== -1
+  )
 
       };
 
+      // updating the quiz session with the poll results
 
+      const quizSession = await QuizSession.findByIdAndUpdate(
+  session.quizSessionId,
+  {
+    $inc: {
+      totalQuestions: 1,
+      totalResponses: totalResponses,
+      totalCorrect: correctCount,
+      totalIncorrect: incorrectCount
+    }
+  },
+  {
+    new: true
+  }
+);
+
+if (quizSession) {
+  quizSession.overallAccuracy =
+    quizSession.totalResponses > 0
+      ? Number(
+          (
+            (quizSession.totalCorrect /
+              quizSession.totalResponses) *
+            100
+          ).toFixed(2)
+        )
+      : 0;
+
+  await quizSession.save();
+}
+
+// ========================================
+// SAVE POLL RESULT TO DATABASE
+// ========================================
+
+const updatedPoll =
+  await Poll.findOneAndUpdate(
+    { pollId },
+
+    {
+      correctAnswer,
+      totalResponses,
+      correctCount,
+      incorrectCount,
+
+      firstCorrectParticipant:
+        firstCorrectParticipant
+          ? {
+              userId:
+                firstCorrectParticipant.userId,
+
+              username:
+                firstCorrectParticipant.username
+            }
+          : null,
+
+      status: "completed"
+    },
+
+    {
+      new: true
+    }
+  );
+
+if (!updatedPoll) {
+
+  return res.status(404).json({
+
+    success: false,
+
+    message:
+      "Poll not found in database"
+
+  });
+
+}
+
+console.log(
+  "Poll result saved to MongoDB:",
+  updatedPoll._id
+);
 
       // ========================================
       // Send Result
