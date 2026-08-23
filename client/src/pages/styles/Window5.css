@@ -734,3 +734,17 @@
   margin-top: 2px;
   font-size: 10px;
 }
+
+.window5-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-session-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./styles/Window5.css";
 
 function Window5() {
 
+   const navigate = useNavigate();
   const location = useLocation();
 
   const quizSessionId =
@@ -286,7 +288,16 @@ useEffect(() => {
           minute: "2-digit"
         })
       : "-";
+// handle new session
+      const handleNewSession = () => {
+  localStorage.removeItem("quizSession");
+  localStorage.removeItem("pollData");
+  localStorage.removeItem("quizData");
+  localStorage.removeItem("currentPoll");
+  localStorage.removeItem("quizResults");
 
+  navigate("/");
+};
 
   // ========================================
   // UI
@@ -296,19 +307,28 @@ useEffect(() => {
 
     <div className="window5">
 
-      {/* HEADER */}
+     {/* HEADER */}
 
-      <div className="window5-header">
+<div className="window5-header">
 
-        <h1>
-          Final Analysis
-        </h1>
+  <div>
+    <h1>
+      Final Analysis
+    </h1>
 
-        <p>
-          Quiz Summary
-        </p>
+    <p>
+      Quiz Summary
+    </p>
+  </div>
 
-      </div>
+  <button
+    className="new-session-btn"
+    onClick={handleNewSession}
+  >
+    New Session
+  </button>
+
+</div>
 
     <div className="analysis-tabs">
 
