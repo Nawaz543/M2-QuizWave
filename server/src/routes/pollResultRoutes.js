@@ -482,34 +482,118 @@ const correctResponseDocuments =
 
       // updating the quiz session with the poll results
 
-      const quizSession = await QuizSession.findByIdAndUpdate(
-  session.quizSessionId,
-  {
-    $inc: {
-      totalQuestions: 1,
-      totalResponses: totalResponses,
-      totalCorrect: correctCount,
-      totalIncorrect: incorrectCount
+     // ========================================
+// UPDATE QUIZ SESSION SUMMARY
+// FROM COMPLETED POLLS
+// ========================================
+
+const completedPolls =
+  await Poll.find({
+    quizSessionId: session.quizSessionId,
+    status: "completed"
+  }).lean();
+
+
+// ========================================
+// CALCULATE QUIZ SUMMARY
+// ========================================
+
+const sessionTotalQuestions =
+  completedPolls.length;
+
+const sessionTotalResponses =
+  completedPolls.reduce(
+    (sum, poll) =>
+      sum + Number(poll.totalResponses || 0),
+    0
+  );
+
+const sessionTotalCorrect =
+  completedPolls.reduce(
+    (sum, poll) =>
+      sum + Number(poll.correctCount || 0),
+    0
+  );
+
+const sessionTotalIncorrect =
+  completedPolls.reduce(
+    (sum, poll) =>
+      sum + Number(poll.incorrectCount || 0),
+    0
+  );
+
+
+// ========================================
+// OVERALL ACCURACY
+// ========================================
+
+const sessionOverallAccuracy =
+  sessionTotalResponses > 0
+    ? Number(
+        (
+          (sessionTotalCorrect /
+            sessionTotalResponses) *
+          100
+        ).toFixed(2)
+      )
+    : 0;
+
+
+// ========================================
+// UPDATE QUIZ SESSION
+// ========================================
+
+const quizSession =
+  await QuizSession.findByIdAndUpdate(
+
+    session.quizSessionId,
+
+    {
+      totalQuestions:
+        sessionTotalQuestions,
+
+      totalResponses:
+        sessionTotalResponses,
+
+      totalCorrect:
+        sessionTotalCorrect,
+
+      totalIncorrect:
+        sessionTotalIncorrect,
+
+      overallAccuracy:
+        sessionOverallAccuracy
+    },
+
+    {
+      new: true
     }
-  },
-  {
-    new: true
-  }
-);
+
+  );
+
 
 if (quizSession) {
-  quizSession.overallAccuracy =
-    quizSession.totalResponses > 0
-      ? Number(
-          (
-            (quizSession.totalCorrect /
-              quizSession.totalResponses) *
-            100
-          ).toFixed(2)
-        )
-      : 0;
 
-  await quizSession.save();
+  console.log(
+    "Quiz Session Summary Updated:",
+    {
+      totalQuestions:
+        sessionTotalQuestions,
+
+      totalResponses:
+        sessionTotalResponses,
+
+      totalCorrect:
+        sessionTotalCorrect,
+
+      totalIncorrect:
+        sessionTotalIncorrect,
+
+      overallAccuracy:
+        sessionOverallAccuracy
+    }
+  );
+
 }
 
 // ========================================
