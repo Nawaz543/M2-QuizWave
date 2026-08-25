@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/Window1.css";
+import { logoutUser } from "../utils/auth";
 
 function YouTubeSetup() {
   const navigate = useNavigate();
@@ -159,6 +160,16 @@ function YouTubeSetup() {
             Connect your YouTube live class to QuizWave
           </p>
         </div>
+
+       <button
+  className="logout-btn"
+  onClick={logoutUser}
+  title="Logout"
+  aria-label="Logout"
+>
+  <span className="power-icon">⏻</span>
+  <span className="logout-text">Logout</span>
+</button>
 
       </div>
 
