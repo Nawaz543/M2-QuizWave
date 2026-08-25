@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "./styles/Window5.css";
+import "./styles/Win5.css";
 
 function Window5() {
 
@@ -299,6 +299,17 @@ useEffect(() => {
   navigate("/");
 };
 
+
+const trimTitle = (title, wordLimit ) => {
+  const words = title.trim().split(/\s+/);
+
+  if (words.length <= wordLimit) {
+    return title;
+  }
+
+  return words.slice(0, wordLimit).join(" ") + ".....";
+};
+
   // ========================================
   // UI
   // ========================================
@@ -310,6 +321,11 @@ useEffect(() => {
      {/* HEADER */}
 
 <div className="window5-header">
+   <img
+          src="/logo.png"
+          alt="QuizWave Logo"
+          className="quizwave-logo"
+        />
 
   <div>
     <h1>
@@ -388,8 +404,8 @@ useEffect(() => {
           </span>
 
           <h2>
-            {quiz.videoTitle || "Untitled Live"}
-          </h2>
+  {trimTitle(quiz.videoTitle || "Untitled Live", 6)}
+</h2>
 
         </div>
 

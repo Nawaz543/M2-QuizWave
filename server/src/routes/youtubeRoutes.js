@@ -554,6 +554,15 @@ console.log(
     // Save session
     pollSessions.set(pollId, session);
 
+    
+
+console.log("================================");
+console.log("NEW POLL CREATED");
+console.log("Poll ID:", pollId);
+console.log("Question:", questionNumber);
+console.log("Answered Users:", session.answeredUsers.size);
+console.log("================================");
+
 
     console.log(
       `Poll started: ${pollId}`
@@ -649,10 +658,13 @@ router.post("/poll/:pollId/stop", (req, res) => {
 // ========================================
 
 const collectChatMessages = async (pollId) => {
+  
 
   const session = pollSessions.get(pollId);
   
-
+console.log(
+  `Collecting → Poll: ${pollId}, Question: ${session.questionNumber}, Answered Users: ${session.answeredUsers.size}`
+);
   // Poll exist nahi karta ya already stopped hai
   if (!session || !session.isRunning) {
     return;
@@ -766,6 +778,25 @@ const collectChatMessages = async (pollId) => {
     continue;
   }
 
+  // ========================================
+// CHECK MESSAGE TIME
+// Only accept messages from current poll
+// ========================================
+
+const messageTime =
+  new Date(timestamp).getTime();
+
+if (
+  messageTime < session.startTime ||
+  messageTime > session.endTime
+) {
+
+  console.log(
+    `Ignored OUTSIDE POLL: ${username} → ${message}`
+  );
+
+  continue;
+}
 
   // ========================================
   // 3. Convert message to valid option

@@ -1,6 +1,30 @@
-/* ================================
-   Poll Page
-================================ */
+/* =========================================================
+   QUIZWAVE — WINDOW 2 : POLL CONFIGURATION
+   450 x 450 Optimized
+   Futuristic Neon / Glass UI
+========================================================= */
+
+:root {
+  --bg-main: #030216;
+
+  --cyan: #52fff0;
+  --cyan-soft: #7affff;
+
+  --purple: #9b6bff;
+
+  --text: #e9f3ff;
+  --muted: rgba(220, 235, 255, 0.68);
+
+  --glass: rgba(255, 255, 255, 0.045);
+  --glass-soft: rgba(255, 255, 255, 0.018);
+
+  --border: rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
 
 .poll-page {
   width: 100%;
@@ -8,76 +32,250 @@
   min-height: 0;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   box-sizing: border-box;
-  padding: 8px;
+  padding: 16px;
 
-  background: #0f1117;
-  color: #ffffff;
-
-  font-family: Arial, sans-serif;
-
+  position: relative;
   overflow: hidden;
+
+  color: var(--text);
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+  background:
+    radial-gradient(
+      500px 300px at 10% 10%,
+      rgba(82, 255, 240, 0.09),
+      transparent 65%
+    ),
+    radial-gradient(
+      500px 350px at 90% 90%,
+      rgba(155, 107, 255, 0.11),
+      transparent 65%
+    ),
+    radial-gradient(
+      700px 500px at 50% 50%,
+      #0a0920 0%,
+      #030216 55%,
+      #000 100%
+    );
 }
 
 
-/* ================================
-   Card
-================================ */
+/* =========================================================
+   BACKGROUND GLOW
+========================================================= */
+
+.poll-page::before {
+  content: "";
+
+  position: absolute;
+
+  width: 280px;
+  height: 280px;
+
+  top: -140px;
+  right: -110px;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      from 180deg,
+      rgba(82, 255, 240, 0.14),
+      rgba(155, 107, 255, 0.15),
+      rgba(82, 255, 240, 0.08)
+    );
+
+  filter: blur(35px);
+
+  pointer-events: none;
+
+  animation: pollGlow 6s ease-in-out infinite alternate;
+}
+
+
+.poll-page::after {
+  content: "";
+
+  position: absolute;
+
+  width: 230px;
+  height: 230px;
+
+  bottom: -150px;
+  left: -100px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(155, 107, 255, 0.15),
+      transparent 70%
+    );
+
+  filter: blur(35px);
+
+  pointer-events: none;
+}
+
+
+@keyframes pollGlow {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(-15px, 15px) scale(1.08);
+  }
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
 
 .poll-card {
   width: 100%;
-  max-width: 300px;
+  max-width: 400px;
 
   box-sizing: border-box;
 
-  background: #171a22;
+  padding: 22px;
 
-  border: 1px solid #292e3a;
-  border-radius: 13px;
-
-  padding: 11px;
-
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.35);
+  position: relative;
+  z-index: 2;
 
   overflow: hidden;
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.018)
+    );
+
+  border: 1px solid var(--border);
+
+  backdrop-filter: blur(10px) saturate(1.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+  animation: cardEnter 0.45s ease-out;
 }
 
 
-/* ================================
-   Header
-================================ */
+/* Neon glow */
+
+.poll-card::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -2px;
+
+  background:
+    linear-gradient(
+      120deg,
+      var(--cyan),
+      transparent 35%,
+      transparent 65%,
+      var(--purple)
+    );
+
+  opacity: 0.08;
+
+  filter: blur(16px);
+
+  pointer-events: none;
+}
+
+
+/* Top neon line */
+
+.poll-card::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 12%;
+
+  width: 76%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(82, 255, 240, 0.5),
+      rgba(155, 107, 255, 0.5),
+      transparent
+    );
+
+  opacity: 0.65;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .poll-header {
   display: flex;
   align-items: center;
 
-  gap: 8px;
+  gap: 11px;
 
-  margin-bottom: 8px;
+  margin-bottom: 19px;
+
+  position: relative;
+  z-index: 2;
 }
 
 
-/* Logo */
+/* =========================================================
+   LOGO
+========================================================= */
 
-.quizwave-logo {
-  width: 36px;
-  height: 36px;
-
-  object-fit: cover;
-
-  border-radius: 50%;
+.poll-header .quizwave-logo {
+  width: 42px;
+  height: 42px;
 
   flex-shrink: 0;
 
-  border: 1px solid #292e3a;
+  object-fit: cover;
+
+
+  box-shadow:
+    0 0 18px rgba(82, 255, 240, 0.08),
+    inset 0 0 15px rgba(255, 255, 255, 0.04);
+
+  
 }
 
 
-/* Header Content */
+/* =========================================================
+   HEADER CONTENT
+========================================================= */
 
 .poll-header-content {
   min-width: 0;
@@ -87,45 +285,66 @@
 .poll-header-content h1 {
   margin: 0;
 
-  font-size: 15px;
+  font-size: 16px;
+
   line-height: 1.2;
 
   font-weight: 700;
+
+  letter-spacing: 0.07em;
+
+  text-transform: uppercase;
+
+  color: var(--cyan-soft);
+
+  text-shadow:
+    0 0 15px rgba(82, 255, 240, 0.12);
 }
 
 
 .poll-header-content p {
-  margin: 2px;
+  margin: 4px 0 0;
+ text-align: left;
+  color: var(--muted);
 
-  color: #858c9c;
+  font-size: 10px;
 
-  font-size: 9px;
-  line-height: 1.2;
+  line-height: 1.3;
+
+  letter-spacing: 0.03em;
 }
 
 
-/* ================================
-   Configuration Section
-================================ */
+/* =========================================================
+   CONFIG SECTION
+========================================================= */
 
 .config-section {
-  margin-top: 6px;
+  margin-top: 13px;
+
+  position: relative;
+  z-index: 2;
 }
 
 
 .section-title {
-  margin-bottom: 4px;
+  margin-bottom: 7px;
 
-  color: #c5cad4;
+  color: rgba(220, 236, 255, 0.9);
 
   font-size: 10px;
-  font-weight: 600;
+
+  font-weight: 700;
+
+  letter-spacing: 0.07em;
+
+  text-transform: uppercase;
 }
 
 
-/* ================================
-   Poll Time
-================================ */
+/* =========================================================
+   POLL TIME
+========================================================= */
 
 .time-row {
   width: 100%;
@@ -134,15 +353,15 @@
   align-items: center;
   justify-content: space-between;
 
-  gap: 3px;
+  gap: 7px;
 }
 
 
-/* Circular Time Button */
+/* Time circles */
 
 .time-circle {
-  width: 30px;
-  height: 30px;
+  width: 42px;
+  height: 42px;
 
   flex-shrink: 0;
 
@@ -152,96 +371,133 @@
 
   padding: 0;
 
-  border: 1px solid #303542;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+
   border-radius: 50%;
 
-  background: #101219;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.018)
+    );
 
-  color: #858c9c;
+  color: rgba(220, 235, 255, 0.65);
 
   font-size: 12px;
-  font-weight: 600;
+
+  font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.2s;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease,
+    color 0.15s ease;
 }
 
 
 .time-circle:hover {
-  border-color: #ff0033;
+  transform: translateY(-1px);
 
-  color: #ffffff;
-}
+  border-color:
+    rgba(82, 255, 240, 0.35);
 
-
-.time-circle.active {
-  background: #ff0033;
-
-  border-color: #ff0033;
-
-  color: #ffffff;
+  color: var(--cyan-soft);
 
   box-shadow:
-    0 0 8px rgba(255, 0, 51, 0.25);
+    0 0 16px rgba(82, 255, 240, 0.06);
 }
 
 
-/* Custom + Button */
+/* Active */
+
+.time-circle.active {
+  background:
+    linear-gradient(
+      135deg,
+      var(--cyan),
+      var(--purple)
+    );
+
+  border-color: transparent;
+
+  color: #02020c;
+
+  box-shadow:
+    0 0 18px rgba(82, 255, 240, 0.14),
+    0 8px 22px rgba(120, 80, 255, 0.12);
+}
+
+
+/* Custom */
 
 .custom-circle {
-  font-size: 15px;
+  font-size: 18px;
+
   font-weight: 400;
 }
 
 
-/* ================================
-   Custom Time Input
-================================ */
+/* =========================================================
+   CUSTOM TIME INPUT
+========================================================= */
 
 .custom-time-wrapper {
   width: 100%;
-  height: 30px;
+  height: 38px;
 
   display: flex;
   align-items: center;
 
   box-sizing: border-box;
 
-  margin-top: 5px;
+  margin-top: 8px;
 
-  padding: 0 8px;
+  padding: 0 10px;
 
-  background: #101219;
+  border-radius: 9px;
 
-  border: 1px solid #303542;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.018)
+    );
 
-  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
 
-  transition: 0.2s;
+  box-shadow:
+    0 7px 20px rgba(0, 0, 0, 0.3),
+    inset 0 -4px 12px rgba(255, 255, 255, 0.012);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 
 .custom-time-wrapper:focus-within {
-  border-color: #ff0033;
+  border-color:
+    rgba(82, 255, 240, 0.4);
 
   box-shadow:
-    0 0 0 2px rgba(255, 0, 51, 0.08);
+    0 0 20px rgba(82, 255, 240, 0.06);
 }
 
-
-/* Clock */
 
 .time-icon {
-  margin-right: 6px;
+  margin-right: 7px;
 
-  font-size: 10px;
+  font-size: 12px;
 
   flex-shrink: 0;
+
+  opacity: 0.75;
 }
 
-
-/* Input */
 
 .custom-time-wrapper input {
   width: 100%;
@@ -252,80 +508,92 @@
 
   background: transparent;
 
-  color: #ffffff;
+  color: #eaf6ff;
 
-  font-size: 10px;
+  font-size: 11px;
+
+  font-family: inherit;
 }
 
 
 .custom-time-wrapper input::placeholder {
-  color: #626978;
+  color: rgba(170, 190, 220, 0.4);
 }
 
 
-/* Seconds */
-
 .seconds-text {
-  color: #626978;
+  color: rgba(170, 190, 220, 0.4);
 
-  font-size: 9px;
+  font-size: 10px;
 
   flex-shrink: 0;
 }
 
 
-/* ================================
-   Option Type
-================================ */
+/* =========================================================
+   OPTION TYPE
+========================================================= */
 
 .option-select {
   width: 100%;
-  height: 30px;
+  height: 38px;
 
   box-sizing: border-box;
 
-  padding: 0 7px;
+  padding: 0 10px;
 
-  border: 1px solid #303542;
-  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+
+  border-radius: 9px;
 
   outline: none;
 
-  background: #101219;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.018)
+    );
 
-  color: #ffffff;
+  color: #eaf6ff;
 
-  font-size: 10px;
+  font-size: 11px;
+
+  font-family: inherit;
 
   cursor: pointer;
 
-  transition: 0.2s;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 
 .option-select:hover {
-  border-color: #454b5a;
+  border-color:
+    rgba(82, 255, 240, 0.25);
 }
 
 
 .option-select:focus {
-  border-color: #ff0033;
+  border-color:
+    rgba(82, 255, 240, 0.4);
 
   box-shadow:
-    0 0 0 2px rgba(255, 0, 51, 0.08);
+    0 0 20px rgba(82, 255, 240, 0.06);
 }
 
 
 .option-select option {
-  background: #171a22;
+  background: #0d0c1b;
 
   color: #ffffff;
 }
 
 
-/* ================================
-   All Questions
-================================ */
+/* =========================================================
+   ALL QUESTIONS
+========================================================= */
 
 .all-question-box {
   width: 100%;
@@ -334,69 +602,95 @@
   align-items: center;
   justify-content: space-between;
 
-  gap: 6px;
+  gap: 10px;
 
   box-sizing: border-box;
 
-  margin-top: 7px;
+  margin-top: 14px;
 
-  padding: 7px 8px;
+  padding: 10px 12px;
 
-  background: #11141b;
+  border-radius: 10px;
 
-  border: 1px solid #292e3a;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.015)
+    );
 
-  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
 
 .all-question-box strong {
   display: block;
 
-  color: #ffffff;
-
+  color: #eaf6ff;
+text-align: left;
   font-size: 10px;
-  line-height: 1.2;
+
+  line-height: 1.3;
+
+  letter-spacing: 0.13em;
 }
 
 
 .all-question-box p {
-  margin: 2px 0 0;
+  margin: 3px 0 0;
 
-  color: #626978;
-
-  font-size: 8px;
-  line-height: 1.2;
+  color: rgba(170, 190, 220, 0.42);
+text-align: left;
+  font-size: 9px;
+letter-spacing: 0.13em;
+  line-height: 1.3;
 }
 
 
-/* ================================
-   Toggle
-================================ */
+/* =========================================================
+   TOGGLE
+========================================================= */
 
 .toggle-btn {
   position: relative;
 
-  width: 30px;
-  height: 17px;
+  width: 34px;
+  height: 19px;
 
   flex-shrink: 0;
 
   padding: 0;
 
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
   border-radius: 20px;
 
-  background: #303542;
+  background:
+    rgba(255, 255, 255, 0.08);
 
   cursor: pointer;
 
-  transition: 0.2s;
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 
 .toggle-btn.on {
-  background: #ff0033;
+  background:
+    linear-gradient(
+      90deg,
+      var(--cyan),
+      var(--purple)
+    );
+
+  border-color: transparent;
+
+  box-shadow:
+    0 0 15px rgba(82, 255, 240, 0.1);
 }
 
 
@@ -413,55 +707,78 @@
 
   border-radius: 50%;
 
-  transition: 0.2s;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.25);
+
+  transition:
+    left 0.2s ease;
 }
 
 
 .toggle-btn.on .toggle-circle {
-  left: 15px;
+  left: 17px;
 }
 
 
-/* ================================
-   Error
-================================ */
+/* =========================================================
+   ERROR
+========================================================= */
 
 .status-box {
   display: flex;
   align-items: center;
 
-  gap: 6px;
+  gap: 8px;
 
   box-sizing: border-box;
 
-  margin-top: 7px;
+  margin-top: 10px;
 
-  padding: 6px 8px;
+  padding: 9px 10px;
 
-  border-radius: 7px;
+  border-radius: 9px;
 
   font-size: 9px;
+
+  position: relative;
+  z-index: 2;
 }
 
 
 .error-box {
-  background: rgba(255, 60, 60, 0.08);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 60, 60, 0.08),
+      rgba(255, 60, 60, 0.025)
+    );
 
-  border: 1px solid rgba(255, 60, 60, 0.18);
+  border:
+    1px solid rgba(255, 90, 90, 0.16);
 
-  color: #ff7070;
+  color: #ff8585;
+
+  box-shadow:
+    0 8px 20px rgba(255, 40, 40, 0.025);
 }
 
 
 .status-icon {
   flex-shrink: 0;
 
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 6px;
+
+  background:
+    rgba(255, 70, 70, 0.08);
+
   font-size: 10px;
-}
-
-
-.status-box strong {
-  font-size: 9px;
 }
 
 
@@ -469,37 +786,66 @@
   margin: 0;
 
   font-size: 9px;
+
+  line-height: 1.35;
 }
 
 
-/* ================================
-   Start Poll
-================================ */
+/* =========================================================
+   START POLL BUTTON
+========================================================= */
 
 .start-poll-btn {
   width: 100%;
-  height: 34px;
+  height: 40px;
 
-  margin-top: 9px;
+  margin-top: 14px;
 
   border: none;
-  border-radius: 7px;
 
-  background: #ff0033;
+  border-radius: 10px;
 
-  color: #ffffff;
+  background:
+    linear-gradient(
+      90deg,
+      var(--cyan),
+      var(--purple)
+    );
 
-  font-size: 10px;
-  font-weight: 600;
+  color: #02020c;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
 
   cursor: pointer;
 
-  transition: 0.2s;
+  box-shadow:
+    0 10px 30px rgba(120, 80, 255, 0.12),
+    0 0 18px rgba(82, 255, 240, 0.05);
+
+  transition:
+    transform 0.15s ease,
+    filter 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 
 .start-poll-btn:hover:not(:disabled) {
-  background: #e6002f;
+  filter: brightness(1.08);
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 13px 32px rgba(120, 80, 255, 0.18),
+    0 0 24px rgba(82, 255, 240, 0.08);
+}
+
+
+.start-poll-btn:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 
@@ -510,25 +856,27 @@
 }
 
 
-/* ================================
-   Spinner
-================================ */
+/* =========================================================
+   SPINNER
+========================================================= */
 
 .spinner {
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
 
   display: inline-block;
 
-  margin-right: 4px;
+  margin-right: 5px;
 
-  border: 2px solid rgba(255, 255, 255, 0.35);
+  border:
+    2px solid rgba(0, 0, 0, 0.2);
 
-  border-top-color: #ffffff;
+  border-top-color: #02020c;
 
   border-radius: 50%;
 
-  animation: spin 0.7s linear infinite;
+  animation:
+    spin 0.7s linear infinite;
 
   vertical-align: middle;
 }
@@ -541,94 +889,105 @@
 }
 
 
-/* ================================
-   Small Window
-================================ */
+/* =========================================================
+   CARD ENTRANCE
+========================================================= */
 
-@media (max-width: 300px) {
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(10px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL WINDOW
+========================================================= */
+
+@media (max-width: 400px) {
 
   .poll-page {
-    padding: 5px;
+    padding: 10px;
   }
 
 
   .poll-card {
-    padding: 11px;
+    padding: 18px;
 
-    border-radius: 11px;
+    border-radius: 15px;
   }
 
 
   .poll-header {
-    gap: 7px;
+    gap: 10px;
 
-    margin-bottom: 9px;
+    margin-bottom: 17px;
   }
 
 
-  .quizwave-logo {
-    width: 32px;
-    height: 32px;
+  .poll-header .quizwave-logo {
+    width: 40px;
+    height: 40px;
   }
 
 
   .poll-header-content h1 {
-    font-size: 13px;
-    letter-spacing: 1px;
+    font-size: 14px;
   }
 
 
   .poll-header-content p {
-    font-size: 8px;
-    letter-spacing: 1px;
-  }
-
-
-  .time-row {
-    gap: 3px;
-  }
-
-
-  .time-circle {
-    width: 27px;
-    height: 27px;
-
-    font-size: 12px;
-  }
-
-
-  .custom-circle {
-    font-size: 13px;
-  }
-
-
-  .option-select {
-    height: 29px;
-
     font-size: 9px;
   }
 
 
-  .all-question-box {
-    padding: 12px;
-  }
+  .time-circle {
+    width: 38px;
+    height: 38px;
 
-
-  .all-question-box strong {
     font-size: 10px;
   }
 
 
-  .all-question-box p {
-    font-size: 8.5px;
-    letter-spacing: 1px;
+  .custom-circle {
+    font-size: 16px;
+  }
+
+
+  .option-select,
+  .custom-time-wrapper {
+    height: 36px;
   }
 
 
   .start-poll-btn {
-    height: 32px;
-
-    font-size: 13px;
+    height: 38px;
   }
-
 }
+
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .poll-page::before,
+  .poll-card,
+  .spinner {
+    animation: none;
+  }
+}
+

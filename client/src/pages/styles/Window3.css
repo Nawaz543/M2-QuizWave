@@ -51,7 +51,7 @@
    Header
 ================================ */
 
-.poll-header {
+.poll-header2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -68,7 +68,7 @@
   color: #8b93a7;
 }
 
-.poll-header h1 {
+.poll-header2 h1 {
   margin: 0;
 
   font-size: 18px;
@@ -271,7 +271,7 @@
     border-radius: 14px;
   }
 
-  .poll-header h1 {
+  .poll-header2 h1 {
     font-size: 15px;
     letter-spacing: 1px;
   }
@@ -285,7 +285,7 @@
   }
 
   .option {
-    height: 20px;
+    height: 34px;
   }
 
 }
@@ -359,4 +359,46 @@
 .confirm-answer-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* ================================
+   Developer Credit
+================================ */
+.developer-credit {
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  color: rgba(255, 255, 255, 0.28);
+
+  font-size: 8px;
+  white-space: nowrap;
+
+  z-index: 20;
+}
+
+.developer-credit span:last-child {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.linkedin-badge {
+  width: 15px;
+  height: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 3px;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  color: rgba(255, 255, 255, 0.3);
+
+  font-size: 9px;
+  font-weight: 700;
 }

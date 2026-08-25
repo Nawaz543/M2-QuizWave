@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./styles/Window3.css";
+// import { Linkedin } from "lucide-react";
 
 function Window3() {
   const location = useLocation();
@@ -280,13 +281,18 @@ navigate("/window4", {
       <div className="poll-card">
 
         {/* Header */}
-        <div className="poll-header">
+        <div className="poll-header2">
+          <img
+          src="/logo.png"
+          alt="QuizWave Logo"
+          className="quizwave-logo"
+        />
 
           <div>
             <p className="poll-label">LIVE POLL</p>
 
             <h1>
-              Question #{pollConfig?.questionNumber || "1"}
+              Question #
             </h1>
           </div>
 
@@ -406,6 +412,10 @@ navigate("/window4", {
         </button>
 
       </div>
+<div className="developer-credit">
+  <span className="linkedin-badge">in</span>
+  <span>Developed by MD SHAHNAWAZ PERVEZ</span>
+</div>
 
     </div>
   );

@@ -209,7 +209,7 @@ return (
       <div className="poll-header">
 
         <img
-          src="/logo.jpg"
+          src="/logo.png"
           alt="QuizWave Logo"
           className="quizwave-logo"
         />

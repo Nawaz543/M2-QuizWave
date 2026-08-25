@@ -148,7 +148,7 @@ function YouTubeSetup() {
       <div className="youtube-header">
 
         <img
-          src="/logo.jpg"
+          src="/logo.png"
           alt="QuizWave Logo"
           className="quizwave-logo"
         />
@@ -156,9 +156,7 @@ function YouTubeSetup() {
         <div className="youtube-header-content">
           <h1>Mission 2 QuizWave</h1>
           <p>
-            Connect your YouTube live class to
-            <br />
-            QuizWave
+            Connect your YouTube live class to QuizWave
           </p>
         </div>
 
@@ -256,13 +254,19 @@ function YouTubeSetup() {
 
 
       {/* Footer */}
-      <div className="youtube-footer">
+  
+<div className="youtube-footer">
+  <div className="footer-main">
+    <span>QuizWave</span>
+    <span>•</span>
+    <span>Live Quiz System</span>
+  </div>
 
-        <span>QuizWave</span>
-        <span>•</span>
-        <span>Live Quiz System</span>
+  <div className="footer-developer">
+    Developed by <strong>MD SHAHNAWAZ PERVEZ</strong>
+  </div>
+</div>
 
-      </div>
 
     </div>
 

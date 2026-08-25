@@ -196,8 +196,13 @@ const handleNextQuestion = async () => {
 
       {/* Header */}
       <div className="result-header">
+         <img
+          src="/logo.png"
+          alt="QuizWave Logo"
+          className="quizwave-logo"
+        />
         <span>RESULT</span>
-        <span>Q.{result.questionNumber}</span>
+        <span>Q. #</span>
       </div>
 
       <div className="result-stats">
@@ -239,7 +244,7 @@ const handleNextQuestion = async () => {
               return (
                 <div className="option-row" key={option}>
 
-                  <div className="option-label">
+                  <div className=" option-label-win4">
                     {option}
                   </div>
 
