@@ -745,135 +745,204 @@ console.log(
 
     for (const item of messages) {
 
-  // ========================================
-  // 1. Message duplicate check
-  // ========================================
+//   // ========================================
+//   // 1. Message duplicate check
+//   // ========================================
 
-  if (session.processedMessageIds.has(item.id)) {
-    continue;
-  }
+//   if (session.processedMessageIds.has(item.id)) {
+//     continue;
+//   }
 
-  session.processedMessageIds.add(item.id);
-
-
-  // ========================================
-  // 2. Student information
-  // ========================================
-
-  const userId =
-    item.authorDetails?.channelId;
-
-  const username =
-    item.authorDetails?.displayName;
-
-  const message =
-    item.snippet?.displayMessage;
-
-  const timestamp =
-    item.snippet?.publishedAt;
+//   session.processedMessageIds.add(item.id);
 
 
-  // Missing information
-  if (!userId || !username || !message) {
-    continue;
-  }
+//   // ========================================
+//   // 2. Student information
+//   // ========================================
 
-  // ========================================
-// CHECK MESSAGE TIME
-// Only accept messages from current poll
-// ========================================
+//   const userId =
+//     item.authorDetails?.channelId;
 
-const messageTime =
-  new Date(timestamp).getTime();
+//   const username =
+//     item.authorDetails?.displayName;
 
-if (
-  messageTime < session.startTime ||
-  messageTime > session.endTime
-) {
+//   const message =
+//     item.snippet?.displayMessage;
+
+//   const timestamp =
+//     item.snippet?.publishedAt;
+
+
+//   // Missing information
+//   if (!userId || !username || !message) {
+//     continue;
+//   }
+
+ 
+
+//   // ========================================
+//   // 3. Convert message to valid option
+//   // ========================================
+
+//   const answer =
+//     extractOption(
+//       message,
+//       session.optionType
+//     );
+
+
+//   // Invalid message
+//   if (!answer) {
+
+//     console.log(
+//       `Ignored: ${username} → ${message}`
+//     );
+
+//     continue;
+//   }
+
+
+//   // ========================================
+//   // 4. One answer per student
+//   // ========================================
+
+//   if (session.answeredUsers.has(userId)) {
+
+//     console.log(
+//       `Duplicate response ignored: ${username} → ${answer}`
+//     );
+
+//     continue;
+//   }
+
+
+//   // ========================================
+//   // 5. Mark student as answered
+//   // ========================================
+
+//   session.answeredUsers.add(userId);
+
+
+//   // ========================================
+//   // 6. Save valid response
+//   // ========================================
+
+//   const responseData = {
+
+//     messageId: item.id,
+
+//     userId,
+
+//     username,
+
+//     answer,
+
+//     message,
+
+//     timestamp
+
+//   };
+
+
+//   session.responses.push(responseData);
+
+
+//   // ========================================
+//   // 7. Console
+//   // ========================================
+
+//   console.log(
+//     `VALID RESPONSE: ${username} → ${answer}`
+//   );
+
+
+
+
+// 1. Message duplicate
+if (session.processedMessageIds.has(item.id)) {
+  continue;
+}
+
+session.processedMessageIds.add(item.id);
+
+
+// 2. Student information
+const userId =
+  item.authorDetails?.channelId;
+
+const username =
+  item.authorDetails?.displayName;
+
+const message =
+  item.snippet?.displayMessage;
+
+const timestamp =
+  item.snippet?.publishedAt;
+
+if (!userId || !username || !message) {
+  continue;
+}
+
+
+// 3. Extract answer
+const answer =
+  extractOption(
+    message,
+    session.optionType
+  );
+
+
+// 4. Invalid message
+if (!answer) {
 
   console.log(
-    `Ignored OUTSIDE POLL: ${username} → ${message}`
+    `INVALID → ${username} → ${message}`
   );
 
   continue;
 }
 
-  // ========================================
-  // 3. Convert message to valid option
-  // ========================================
 
-  const answer =
-    extractOption(
-      message,
-      session.optionType
-    );
-
-
-  // Invalid message
-  if (!answer) {
-
-    console.log(
-      `Ignored: ${username} → ${message}`
-    );
-
-    continue;
-  }
-
-
-  // ========================================
-  // 4. One answer per student
-  // ========================================
-
-  if (session.answeredUsers.has(userId)) {
-
-    console.log(
-      `Duplicate response ignored: ${username} → ${answer}`
-    );
-
-    continue;
-  }
-
-
-  // ========================================
-  // 5. Mark student as answered
-  // ========================================
-
-  session.answeredUsers.add(userId);
-
-
-  // ========================================
-  // 6. Save valid response
-  // ========================================
-
-  const responseData = {
-
-    messageId: item.id,
-
-    userId,
-
-    username,
-
-    answer,
-
-    message,
-
-    timestamp
-
-  };
-
-
-  session.responses.push(responseData);
-
-
-  // ========================================
-  // 7. Console
-  // ========================================
+// 5. Duplicate user
+if (session.answeredUsers.has(userId)) {
 
   console.log(
-    `VALID RESPONSE: ${username} → ${answer}`
+    `DUPLICATE → ${username} → ${answer}`
   );
 
+  continue;
 }
+
+
+// 6. First valid answer
+session.answeredUsers.add(userId);
+
+
+// 7. Save valid response
+const responseData = {
+
+  messageId: item.id,
+
+  userId,
+
+  username,
+
+  answer,
+
+  message,
+
+  timestamp
+
+};
+
+session.responses.push(responseData);
+
+
+// 8. Log
+console.log(
+  `VALID → ${username} → ${answer}`
+);
+    }
 
 
     // ========================================

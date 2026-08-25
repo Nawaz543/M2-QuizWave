@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "./styles/Win5.css";
+import "./styles/Window5.css";
 
 function Window5() {
 
