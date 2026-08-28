@@ -355,6 +355,10 @@ const AdminDashboard = () => {
     }
   };
 
+  const goToHome = () => {
+  navigate("/");
+};
+
 
   return (
     <div className="admin-page">
@@ -370,16 +374,32 @@ const AdminDashboard = () => {
             User Management
           </p>
         </div>
+    
 
-        <button
-          className="admin-logout-btn"
-          onClick={logoutUser}
-          title="Logout"
-        >
-          ⏻
-        </button>
+<div className="admin-header-actions">
 
-      </div>
+  <button
+    className="admin-home-btn"
+    onClick={goToHome}
+    title="Home"
+  >
+    ⌂
+    <span>Home</span>
+  </button>
+
+  <button
+    className="admin-logout-btn"
+    onClick={logoutUser}
+    title="Logout"
+  >
+    ⏻
+    <span>Logout</span>
+  </button>
+
+</div>
+      </div> 
+
+      
 
 
       {/* ERROR */}

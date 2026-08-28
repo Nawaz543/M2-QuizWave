@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
+    // ========================================
+    // BASIC USER INFORMATION
+    // ========================================
+
     email: {
       type: String,
       required: true,
@@ -20,6 +24,10 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "user"],
       default: "user",
     },
+
+    // ========================================
+    // ACCOUNT STATUS
+    // ========================================
 
     isActive: {
       type: Boolean,
@@ -40,7 +48,41 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+
+    // ========================================
+    // OTP PASSWORD RESET
+    // ========================================
+
+    resetOtpHash: {
+      type: String,
+      default: null,
+    },
+
+    resetOtpExpires: {
+      type: Date,
+      default: null,
+    },
+
+    resetOtpAttempts: {
+      type: Number,
+      default: 0,
+    },
+
+    // ========================================
+    // TEMPORARY PASSWORD RESET AUTHORIZATION
+    // ========================================
+
+   resetSessionTokenHash: {
+  type: String,
+  default: null,
+},
+
+resetSessionTokenExpires: {
+  type: Date,
+  default: null,
+},
   },
+
   {
     timestamps: true,
   }

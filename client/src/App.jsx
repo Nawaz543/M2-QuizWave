@@ -8,6 +8,9 @@ import Window5 from "./pages/Window5";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminRoute from "./components/AdminRoute";
+import ForgotPassword from "./pages/ForgotPassword";
+import VerifyOTP from "./pages/VerifyOTP";
+import ResetPassword from "./pages/ResetPassword";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -26,6 +29,22 @@ function App() {
           path="/login"
           element={<Login />}
         />
+
+        <Route
+  path="/forgot-password"
+  element={<ForgotPassword />}
+/>
+
+<Route
+  path="/verify-otp"
+  element={<VerifyOTP />}
+/>
+
+<Route
+  path="/reset-password"
+  element={<ResetPassword />}
+/>
+
 
        <Route
   path="/admin"

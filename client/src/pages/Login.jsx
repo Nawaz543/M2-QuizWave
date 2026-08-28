@@ -78,8 +78,12 @@ const Login = () => {
     <div className="login-page">
 
       <div className="login-card">
-
-        <h1>QuizWave</h1>
+        <img
+          src="/logo.png"
+          alt="QuizWave Logo"
+          className="quizwave-logo"
+        />
+        <h1>Mission2 QuizWave</h1>
 
         <p className="login-subtitle">
           Login to continue
@@ -126,6 +130,14 @@ const Login = () => {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
+
+          <button
+  type="button"
+  className="forgot-password-btn"
+  onClick={() => navigate("/forgot-password")}
+>
+  Forgot Password?
+</button>
 
         </form>
 
