@@ -11,6 +11,7 @@ const pollResultRoutes = require("./routes/pollResultRoutes");
 const quizSessionRoutes = require("./routes/quizSessionRoutes");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const top10Routes = require("./routes/top10Routes");
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use("/api/poll-result", pollResultRoutes);
 app.use( "/api/quiz-session", quizSessionRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/top10", top10Routes);
 
 
 app.get("/api/health", (req, res) => {

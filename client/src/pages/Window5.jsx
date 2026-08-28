@@ -25,6 +25,7 @@ function Window5() {
   const [questionStats, setQuestionStats] = useState([]);
   const [activeTab, setActiveTab] = useState("summary");
 
+
   // ========================================
   // FETCH FINAL ANALYSIS
   // ========================================
@@ -289,14 +290,76 @@ useEffect(() => {
         })
       : "-";
 // handle new session
-      const handleNewSession = () => {
-  localStorage.removeItem("quizSession");
-  localStorage.removeItem("pollData");
-  localStorage.removeItem("quizData");
-  localStorage.removeItem("currentPoll");
-  localStorage.removeItem("quizResults");
+    const handleNewSession = async () => {
+  try {
+    setLoading(true);
+    if (!quizSessionId) {
+      alert("Quiz Session ID not found");
+      return;
+    }
 
-  navigate("/");
+    // Current ranking se Top 10
+    const top10 = ranking.slice(0, 10).map((student) => ({
+      rank: student.rank,
+      userId: student.userId,
+      username: student.username,
+      totalCorrect: student.totalCorrect,
+      performanceScore: student.performanceScore,
+    }));
+
+    console.log("Saving Top 10:", top10);
+
+    // Backend ko Top 10 save + CorrectResponse clear karne bolo
+    const response = await fetch(
+      `http://localhost:5000/api/top10/save-and-clear`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          quizSessionId,
+          videoTitle: quiz.videoTitle || "Untitled Live",
+          top10,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(
+        data.message || "Failed to start new session"
+      );
+    }
+
+    console.log(
+      "Top 10 saved and correct responses cleared:",
+      data
+    );
+
+    // Local storage clear
+    localStorage.removeItem("quizSession");
+    localStorage.removeItem("pollData");
+    localStorage.removeItem("quizData");
+    localStorage.removeItem("currentPoll");
+    localStorage.removeItem("quizResults");
+
+    // New session
+    navigate("/");
+
+  } catch (error) {
+    console.error("New Session Error:", error);
+
+    alert(
+      error.message ||
+      "Failed to start new session"
+    );
+  }finally {
+
+  setLoading(false);
+
+}
 };
 
 
@@ -341,7 +404,9 @@ const trimTitle = (title, wordLimit ) => {
     className="new-session-btn"
     onClick={handleNewSession}
   >
-    New Session
+    {loading
+              ? "Wait a min..."
+              : "New Session →"}
   </button>
 
 </div>
