@@ -480,58 +480,9 @@ const correctResponseDocuments =
 
       };
 
-      // ========================================
-// SAVE POLL RESULT TO DATABASE
-// ========================================
+      // updating the quiz session with the poll results
 
-const updatedPoll =
-  await Poll.findOneAndUpdate(
-    { pollId },
-
-    {
-      correctAnswer,
-      totalResponses,
-      correctCount,
-      incorrectCount,
-
-      firstCorrectParticipant:
-        firstCorrectParticipant
-          ? {
-              userId:
-                firstCorrectParticipant.userId,
-
-              username:
-                firstCorrectParticipant.username
-            }
-          : null,
-
-      status: "completed"
-    },
-
-    {
-      new: true
-    }
-  );
-
-if (!updatedPoll) {
-
-  return res.status(404).json({
-
-    success: false,
-
-    message:
-      "Poll not found in database"
-
-  });
-
-}
-
-console.log(
-  "Poll result saved to MongoDB:",
-  updatedPoll._id
-);
-
-// ========================================
+     // ========================================
 // UPDATE QUIZ SESSION SUMMARY
 // FROM COMPLETED POLLS
 // ========================================
@@ -541,6 +492,7 @@ const completedPolls =
     quizSessionId: session.quizSessionId,
     status: "completed"
   }).lean();
+
 
 // ========================================
 // CALCULATE QUIZ SUMMARY
@@ -644,7 +596,56 @@ if (quizSession) {
 
 }
 
+// ========================================
+// SAVE POLL RESULT TO DATABASE
+// ========================================
 
+const updatedPoll =
+  await Poll.findOneAndUpdate(
+    { pollId },
+
+    {
+      correctAnswer,
+      totalResponses,
+      correctCount,
+      incorrectCount,
+
+      firstCorrectParticipant:
+        firstCorrectParticipant
+          ? {
+              userId:
+                firstCorrectParticipant.userId,
+
+              username:
+                firstCorrectParticipant.username
+            }
+          : null,
+
+      status: "completed"
+    },
+
+    {
+      new: true
+    }
+  );
+
+if (!updatedPoll) {
+
+  return res.status(404).json({
+
+    success: false,
+
+    message:
+      "Poll not found in database"
+
+  });
+
+}
+
+console.log(
+  "Poll result saved to MongoDB:",
+  updatedPoll._id
+);
 
       // ========================================
       // Send Result

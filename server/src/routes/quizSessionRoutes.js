@@ -145,48 +145,49 @@ router.get("/:quizSessionId/analysis", async (req, res) => {
     // Send Analysis
     // ========================================
 
-    return res.json({
+    const totalQuestions = polls.length;
 
-      success: true,
+return res.json({
 
-      quizSession: {
+  success: true,
 
-        id: quizSession._id,
+  quizSession: {
 
-        videoId:
-          quizSession.videoId,
+    id: quizSession._id,
 
-        videoTitle:
-          quizSession.videoTitle,
+    videoId:
+      quizSession.videoId,
 
-        totalQuestions:
-          quizSession.totalQuestions,
+    videoTitle:
+      quizSession.videoTitle,
 
-        totalResponses:
-          quizSession.totalResponses,
+    totalQuestions,
 
-        totalCorrect:
-          quizSession.totalCorrect,
+    totalResponses:
+      quizSession.totalResponses,
 
-        totalIncorrect:
-          quizSession.totalIncorrect,
+    totalCorrect:
+      quizSession.totalCorrect,
 
-        overallAccuracy:
-          quizSession.overallAccuracy,
+    totalIncorrect:
+      quizSession.totalIncorrect,
 
-        startedAt:
-          quizSession.startedAt,
+    overallAccuracy:
+      quizSession.overallAccuracy,
 
-        completedAt:
-          quizSession.completedAt
+    startedAt:
+      quizSession.startedAt,
 
-      },
+    completedAt:
+      quizSession.completedAt
 
-      polls,
+  },
 
-      correctResponses
+  polls,
 
-    });
+  correctResponses
+
+});
 
 
   } catch (error) {
@@ -396,10 +397,9 @@ router.get("/:quizSessionId/ranking", async (req, res) => {
     // TOTAL QUESTIONS
     // ========================================
 
-    const totalQuestions =
-      Number(
-        quizSession.totalQuestions || 0
-      );
+    const totalQuestions = await Poll.countDocuments({
+  quizSessionId
+});
 
 
     // ========================================

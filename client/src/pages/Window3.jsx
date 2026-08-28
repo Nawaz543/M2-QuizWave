@@ -6,6 +6,7 @@ import "./styles/Window3.css";
 function Window3() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const pollConfig = location.state?.pollConfig;
   const pollId = location.state?.pollId;
@@ -144,6 +145,7 @@ const handleStopTime = async () => {
   }
 
   try {
+    setLoading(true);
 
     const response = await fetch(
       `http://localhost:5000/api/poll-result/${pollId}/result`,
@@ -236,7 +238,11 @@ navigate("/window4", {
       "Unable to connect to server."
     );
 
-  }
+  } finally {
+
+  setLoading(false);
+
+}
 
 };
 
@@ -388,9 +394,13 @@ navigate("/window4", {
             <button
               className="confirm-answer-button"
               onClick={handleConfirmAnswer}
-              disabled={!correctAnswer}
+              disabled={!correctAnswer || loading}
             >
-              ✓ Confirm Correct Answer
+
+               {loading
+              ? "Saving data..."
+              : "✓ Confirm Correct Answers"}
+              
             </button>
 
           )}

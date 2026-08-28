@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./styles/Window4.css";
 
 function Window4() {
   const location = useLocation();
   const navigate = useNavigate();
+ const [loading, setLoading] = useState(false);
+  
+
 
   const result = location.state?.result;
   const pollId = location.state?.pollId;
@@ -118,6 +121,7 @@ const handleNextQuestion = async () => {
     };
 
     try {
+       setLoading(true);
       const response = await fetch(
         "http://localhost:5000/api/youtube/poll/start",
         {
@@ -168,7 +172,11 @@ const handleNextQuestion = async () => {
         error.message ||
         "Unable to start next poll."
       );
-    }
+    }finally {
+
+  setLoading(false);
+
+}
 
     return;
   }
@@ -307,9 +315,14 @@ const handleNextQuestion = async () => {
 
         <button
           className="next-que"
-          onClick={handleNextQuestion}
+          onClick={handleNextQuestion }
+           disabled={ loading}
         >
-          Next Question →
+
+           {loading
+              ? "Saving data..."
+              : "Next Question →"}
+          
         </button>
 
       </div>
