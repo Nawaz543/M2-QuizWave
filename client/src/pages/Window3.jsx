@@ -398,7 +398,7 @@ navigate("/window4", {
             >
 
                {loading
-              ? "Saving data..."
+              ? "Loading..."
               : "✓ Confirm Correct Answers"}
               
             </button>

@@ -320,7 +320,7 @@ const handleNextQuestion = async () => {
         >
 
            {loading
-              ? "Saving data..."
+              ? "Loading..."
               : "Next Question →"}
           
         </button>
