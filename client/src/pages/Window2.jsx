@@ -132,7 +132,7 @@ useEffect(() => {
 
 
   try {
-
+   const pollStartTime = Date.now();
     // ================================
     // Start Backend Chat Collection
     // ================================
@@ -150,6 +150,7 @@ useEffect(() => {
           videoId,
           pollConfig,
            quizSessionId,
+            pollStartTime,
         }),
       }
     );
@@ -182,6 +183,7 @@ useEffect(() => {
         pollConfig,
         pollId: data.pollId,
          quizSessionId,
+         pollStartTime,
       },
     });
 

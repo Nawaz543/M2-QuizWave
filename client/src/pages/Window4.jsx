@@ -95,6 +95,8 @@ function Window4() {
   // ========================================
 
 const handleNextQuestion = async () => {
+
+  const pollStartTime = Date.now();
   const currentQuestion = result?.questionNumber || 1;
   const nextQuestion = currentQuestion + 1;
 
@@ -135,6 +137,7 @@ const handleNextQuestion = async () => {
             videoId,
             pollConfig: newPollConfig,
             quizSessionId,
+            pollStartTime,
           }),
         }
       );
@@ -159,6 +162,7 @@ const handleNextQuestion = async () => {
           pollConfig: newPollConfig,
           pollId: data.pollId,
           quizSessionId,
+          pollStartTime,
         },
       });
 

@@ -12,6 +12,7 @@ function Window3() {
   const pollId = location.state?.pollId;
   const videoId = location.state?.videoId;
   const quizSessionId = location.state?.quizSessionId;
+  const pollStartTime = location.state?.pollStartTime;
   
 
   const [timeLeft, setTimeLeft] = useState(
@@ -251,30 +252,69 @@ navigate("/window4", {
   // Countdown Timer
   // ================================
 
+  // useEffect(() => {
+  //   if (!isRunning || timeLeft <= 0) return;
+
+  //   const timer = setInterval(() => {
+
+  //     setTimeLeft((prev) => {
+
+  //       if (prev <= 1) {
+
+  //         clearInterval(timer);
+
+  //         setIsRunning(false);
+
+  //         return 0;
+  //       }
+
+  //       return prev - 1;
+  //     });
+
+  //   }, 1000);
+
+  //   return () => clearInterval(timer);
+
+  // }, [isRunning, timeLeft]);
+
   useEffect(() => {
-    if (!isRunning || timeLeft <= 0) return;
+  if (!pollStartTime || !pollConfig?.pollTime) {
+    return;
+  }
 
-    const timer = setInterval(() => {
+  const totalTime =
+    Number(pollConfig.pollTime) * 1000;
 
-      setTimeLeft((prev) => {
+  const updateTimer = () => {
 
-        if (prev <= 1) {
+    const elapsed =
+      Date.now() - Number(pollStartTime);
 
-          clearInterval(timer);
+    const remaining =
+      Math.max(0, totalTime - elapsed);
 
-          setIsRunning(false);
+    const remainingSeconds =
+      Math.ceil(remaining / 1000);
 
-          return 0;
-        }
+    setTimeLeft(remainingSeconds);
 
-        return prev - 1;
-      });
+    if (remaining <= 0) {
+      setTimeLeft(0);
+      setIsRunning(false);
+    }
+  };
 
-    }, 1000);
+  // Immediately calculate
+  updateTimer();
 
-    return () => clearInterval(timer);
+  const timer = setInterval(
+    updateTimer,
+    250
+  );
 
-  }, [isRunning, timeLeft]);
+  return () => clearInterval(timer);
+
+}, [pollStartTime, pollConfig?.pollTime]);
 
 
   // ================================

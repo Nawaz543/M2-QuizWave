@@ -344,7 +344,8 @@ router.post("/poll/start", async (req, res) => {
     const {
       videoId,
       pollConfig,
-      quizSessionId
+      quizSessionId,
+        pollStartTime
     } = req.body;
 
 if (!quizSessionId) {
@@ -473,17 +474,36 @@ console.log(
     // ========================================
 
     const pollId = crypto.randomUUID();
-
+if (!pollStartTime || !Number.isFinite(Number(pollStartTime))) {
+  return res.status(400).json({
+    success: false,
+    message: "Poll start time is required"
+  });
+}
 
     // ========================================
     // Poll Timing
     // ========================================
 
-    const startTime = Date.now();
+    const startTime = Number(pollStartTime);
 
     const endTime =
       startTime + Number(pollTime) * 1000;
 
+
+console.log("================================");
+console.log("POLL TIMING");
+console.log("pollStartTime:", pollStartTime);
+console.log(
+  "startTime:",
+  new Date(startTime).toISOString()
+);
+console.log(
+  "endTime:",
+  new Date(endTime).toISOString()
+);
+console.log("pollTime:", pollTime);
+console.log("================================");
 
       // ========================================
 // CREATE POLL DOCUMENT IN DATABASE
@@ -879,7 +899,26 @@ const message =
 const timestamp =
   item.snippet?.publishedAt;
 
-if (!userId || !username || !message) {
+if (!userId || !username || !message || !timestamp) {
+  continue;
+}
+
+
+// ========================================
+// IGNORE OLD MESSAGES
+// ========================================
+
+const messageTime =
+  new Date(timestamp).getTime();
+
+if (
+  messageTime <= session.startTime ||
+  messageTime > session.endTime
+) {
+  console.log(
+    `OUTSIDE POLL → ${username} → ${message} → ${timestamp}`
+  );
+
   continue;
 }
 
