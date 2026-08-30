@@ -10,7 +10,7 @@ const createAdmin = async () => {
 
     console.log("MongoDB connected");
 
-    const adminEmail = "admin@quizwave.com";
+    const adminEmail = "mission2hzb@gmail.com";
     const adminPassword = "Admin@123";
 
     const existingAdmin = await User.findOne({

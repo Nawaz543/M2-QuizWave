@@ -28,7 +28,7 @@ const NORMAL_WIDTH = REACT_WIDTH;
 const NORMAL_HEIGHT =
   REACT_HEIGHT + TITLEBAR_HEIGHT;
 
-const MINI_SIZE = 40;
+const MINI_SIZE = 45;
 
 
 // =================================

@@ -244,8 +244,8 @@ body {
 
   display: none;
 
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
 
   position: relative;
 
@@ -266,13 +266,13 @@ body {
 
   display: flex;
 
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
 
   position: absolute;
 
-  left: 6px;
-  top: 3px;
+  left: 2px;
+  top: 1px;
 
   align-items: center;
   justify-content: center;
@@ -298,8 +298,8 @@ body {
 
 #miniLogo img {
 
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
 
   display: block;
 
@@ -325,9 +325,9 @@ body {
   position: absolute;
 
   left: 0;
-  bottom: 2px;
+  bottom: 1px;
 
-  width: 40px;
+  width: 43px;
   height: 9px;
 
   display: flex;
@@ -343,7 +343,7 @@ body {
 
   line-height: 9px;
 
-  letter-spacing: 0.5px;
+  letter-spacing: 0.1px;
 
   cursor: pointer;
 

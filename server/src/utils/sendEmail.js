@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 const sendEmail = async (to, subject, text) => {
   try {
     const info = await transporter.sendMail({
-      from: `"QuizWave" <${process.env.EMAIL_USER}>`,
+      from: `"Mission 2  QuizWave" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       text,
