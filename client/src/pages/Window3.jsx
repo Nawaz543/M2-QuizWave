@@ -277,8 +277,13 @@ navigate("/window4", {
 
   // }, [isRunning, timeLeft]);
 
-  useEffect(() => {
-  if (!pollStartTime || !pollConfig?.pollTime) {
+useEffect(() => {
+
+  if (
+    !pollStartTime ||
+    !pollConfig?.pollTime ||
+    !isRunning
+  ) {
     return;
   }
 
@@ -299,7 +304,9 @@ navigate("/window4", {
     setTimeLeft(remainingSeconds);
 
     if (remaining <= 0) {
+
       setTimeLeft(0);
+
       setIsRunning(false);
     }
   };
@@ -312,9 +319,15 @@ navigate("/window4", {
     250
   );
 
-  return () => clearInterval(timer);
+  return () => {
+    clearInterval(timer);
+  };
 
-}, [pollStartTime, pollConfig?.pollTime]);
+}, [
+  pollStartTime,
+  pollConfig?.pollTime,
+  isRunning
+]);
 
 
   // ================================
@@ -364,26 +377,23 @@ navigate("/window4", {
             TIME REMAINING
           </p>
 
-          <div className="timer">
-
-            {timeLeft}
-
-            <span>sec</span>
-
-          </div>
+          <div className={`timer ${!isRunning ? "timer-stopped" : ""}`}>
+  {timeLeft}
+  <span>sec</span>
+</div>
 
           <div className="timer-line">
 
             <div
-              className="timer-progress"
-              style={{
-                width: `${
-                  pollConfig?.pollTime
-                    ? (timeLeft / pollConfig.pollTime) * 100
-                    : 0
-                }%`,
-              }}
-            ></div>
+  className={`timer-progress ${!isRunning ? "progress-stopped" : ""}`}
+  style={{
+    width: `${
+      pollConfig?.pollTime
+        ? (timeLeft / pollConfig.pollTime) * 100
+        : 0
+    }%`,
+  }}
+></div>
 
           </div>
 

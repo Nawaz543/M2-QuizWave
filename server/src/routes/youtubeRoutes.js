@@ -908,11 +908,19 @@ if (!userId || !username || !message || !timestamp) {
 // IGNORE OLD MESSAGES
 // ========================================
 
+// ========================================
+// POLL TIME WINDOW
+// ========================================
+
+// Allow messages up to 2 seconds before poll start
+const pollStartWithBuffer =
+  session.startTime - 2000;
+
 const messageTime =
   new Date(timestamp).getTime();
 
 if (
-  messageTime <= session.startTime ||
+  messageTime < pollStartWithBuffer ||
   messageTime > session.endTime
 ) {
   console.log(

@@ -402,3 +402,20 @@
   font-size: 9px;
   font-weight: 700;
 }
+
+/* ================================
+   Stopped Timer State
+================================ */
+
+.timer-stopped {
+  color: #777e8d;
+}
+
+.timer-stopped span {
+  color: #626978;
+}
+
+.progress-stopped {
+  opacity: 0.25;
+  filter: grayscale(1);
+}
