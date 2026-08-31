@@ -214,7 +214,7 @@ const handleNextQuestion = async () => {
           className="quizwave-logo"
         />
         <span>RESULT</span>
-        <span>Q. #</span>
+        <span>Q.</span>
       </div>
 
       <div className="result-stats">

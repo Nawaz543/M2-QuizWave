@@ -3,6 +3,7 @@ const {
   BrowserWindow,
   WebContentsView,
   ipcMain,
+  clipboard,
 } = require("electron");
 
 const path = require("path");
@@ -12,6 +13,13 @@ let titleBarView = null;
 let reactView = null;
 
 let normalBounds = null;
+
+// Normal / expanded window ki last position
+let normalPosition = null;
+
+// Mini window ki last position
+let miniPosition = null;
+
 let isMiniMode = false;
 
 
@@ -24,11 +32,18 @@ const REACT_HEIGHT = 450;
 
 const TITLEBAR_HEIGHT = 36;
 
+// =================================
+// EXPANDED WINDOW SIZE - WINDOW 5
+// =================================
+const EXPANDED_WIDTH = 700;
+const EXPANDED_HEIGHT = 700;
+
 const NORMAL_WIDTH = REACT_WIDTH;
 const NORMAL_HEIGHT =
   REACT_HEIGHT + TITLEBAR_HEIGHT;
 
-const MINI_SIZE = 45;
+const MINI_WIDTH = 46;
+const MINI_HEIGHT = 52;
 
 
 // =================================
@@ -50,8 +65,8 @@ function createWindow() {
     // SIZE LIMITS
     // ===============================
 
-    minWidth: MINI_SIZE,
-    minHeight: MINI_SIZE,
+    minWidth: MINI_WIDTH,
+    minHeight: MINI_HEIGHT,
 
     maxWidth: NORMAL_WIDTH,
     maxHeight: NORMAL_HEIGHT,
@@ -74,6 +89,46 @@ function createWindow() {
     },
   });
 
+  // =================================
+// SAVE WINDOW POSITION
+// =================================
+
+mainWindow.on("move", () => {
+
+  if (!mainWindow) {
+    return;
+  }
+
+  const [x, y] = mainWindow.getPosition();
+
+  // ===============================
+  // MINI MODE POSITION
+  // ===============================
+
+  if (isMiniMode) {
+
+    miniPosition = {
+      x,
+      y,
+    };
+
+    return;
+  }
+
+  // ===============================
+  // NORMAL / EXPANDED POSITION
+  // ===============================
+
+  normalPosition = {
+    x,
+    y,
+  };
+
+});
+
+
+  mainWindow.setAlwaysOnTop(true, "screen-saver");
+mainWindow.setVisibleOnAllWorkspaces(true);
 
 
   // =================================
@@ -103,12 +158,20 @@ function createWindow() {
 
   reactView = new WebContentsView({
 
-    webPreferences: {
-      contextIsolation: true,
-      nodeIntegration: false,
-    },
+  webPreferences: {
 
-  });
+    preload: path.join(
+      __dirname,
+      "preload.js"
+    ),
+
+    contextIsolation: true,
+
+    nodeIntegration: false,
+
+  },
+
+});
 
 
   // =================================
@@ -210,6 +273,9 @@ function createWindow() {
       reactView = null;
 
       normalBounds = null;
+      normalPosition = null;
+
+      miniPosition = null;
 
       isMiniMode = false;
 
@@ -250,8 +316,8 @@ function restoreMiniWindow() {
   // =================================
 
   mainWindow.setMinimumSize(
-    MINI_SIZE,
-    MINI_SIZE
+    MINI_WIDTH,
+    MINI_HEIGHT
   );
 
   mainWindow.setMaximumSize(
@@ -264,26 +330,38 @@ function restoreMiniWindow() {
   // RESTORE ORIGINAL WINDOW
   // =================================
 
-  if (normalBounds) {
+  if (normalPosition) {
 
-    mainWindow.setBounds({
+  mainWindow.setPosition(
+    normalPosition.x,
+    normalPosition.y
+  );
 
-      x: normalBounds.x,
-      y: normalBounds.y,
+  mainWindow.setSize(
+    NORMAL_WIDTH,
+    NORMAL_HEIGHT
+  );
 
-      width: NORMAL_WIDTH,
-      height: NORMAL_HEIGHT,
+} else if (normalBounds) {
 
-    });
+  mainWindow.setBounds({
 
-  } else {
+    x: normalBounds.x,
+    y: normalBounds.y,
 
-    mainWindow.setSize(
-      NORMAL_WIDTH,
-      NORMAL_HEIGHT
-    );
+    width: NORMAL_WIDTH,
+    height: NORMAL_HEIGHT,
 
-  }
+  });
+
+} else {
+
+  mainWindow.setSize(
+    NORMAL_WIDTH,
+    NORMAL_HEIGHT
+  );
+
+} 
 
 
   // =================================
@@ -454,12 +532,21 @@ ipcMain.on(
     }
 
 
-    // =================================
-    // SAVE NORMAL WINDOW BOUNDS
-    // =================================
+  // =================================
+// SAVE NORMAL WINDOW STATE
+// =================================
 
-    normalBounds =
-      mainWindow.getBounds();
+normalBounds = mainWindow.getBounds();
+
+normalPosition = {
+  x: normalBounds.x,
+  y: normalBounds.y,
+};
+
+console.log(
+  "NORMAL WINDOW POSITION SAVED:",
+  normalPosition
+);
 
 
     console.log(
@@ -500,13 +587,13 @@ miniRestoreTimer = null;
     // =================================
 
     mainWindow.setMinimumSize(
-      MINI_SIZE,
-      MINI_SIZE
+      MINI_WIDTH,
+      MINI_HEIGHT
     );
 
     mainWindow.setMaximumSize(
-      MINI_SIZE,
-      MINI_SIZE
+      MINI_WIDTH,
+      MINI_HEIGHT
     );
 
 
@@ -524,34 +611,58 @@ miniRestoreTimer = null;
     }
 
 
-    // =================================
-    // GET ORIGINAL POSITION
-    // =================================
+  // =================================
+// MINI WINDOW POSITION
+// =================================
 
-    const [
-      normalX,
-      normalY,
-    ] = mainWindow.getPosition();
+// Agar mini position pehle save hai
+// to wahi use karo.
+// First time mini karne par normal
+// position use hogi.
+
+const miniX =
+  miniPosition
+    ? miniPosition.x
+    : normalPosition
+      ? normalPosition.x
+      : mainWindow.getPosition()[0];
+
+const miniY =
+  miniPosition
+    ? miniPosition.y
+    : normalPosition
+      ? normalPosition.y
+      : mainWindow.getPosition()[1];
 
 
-    // =================================
-    // FORCE EXACT MINI SIZE
-    // =================================
+// =================================
+// FORCE EXACT MINI SIZE
+// =================================
 
-    mainWindow.setSize(
-      MINI_SIZE,
-      MINI_SIZE
-    );
+mainWindow.setSize(
+  MINI_WIDTH,
+  MINI_HEIGHT
+);
 
 
-    // =================================
-    // KEEP ORIGINAL POSITION
-    // =================================
+// =================================
+// RESTORE LAST MINI POSITION
+// =================================
 
-    mainWindow.setPosition(
-      normalX,
-      normalY
-    );
+mainWindow.setPosition(
+  miniX,
+  miniY
+);
+
+
+// =================================
+// SAVE MINI POSITION
+// =================================
+
+miniPosition = {
+  x: miniX,
+  y: miniY,
+};
 
 
     // =================================
@@ -563,8 +674,8 @@ miniRestoreTimer = null;
       x: 0,
       y: 0,
 
-      width: MINI_SIZE,
-      height: MINI_SIZE,
+      width: MINI_WIDTH,
+      height: MINI_HEIGHT,
 
     });
 
@@ -604,6 +715,204 @@ ipcMain.on(
   }
 );
 
+
+// =================================
+// WINDOW 5 - EXPAND
+// =================================
+
+ipcMain.on(
+  "window5-expand",
+  () => {
+
+    console.log(
+      "WINDOW 5 EXPAND IPC RECEIVED"
+    );
+
+    // =================================
+    // SAFETY
+    // =================================
+
+    if (
+      !mainWindow ||
+      isMiniMode
+    ) {
+      return;
+    }
+
+    // =================================
+    // ALLOW EXPANDED SIZE
+    // =================================
+
+    mainWindow.setMinimumSize(
+      MINI_WIDTH,
+      MINI_HEIGHT
+    );
+
+    mainWindow.setMaximumSize(
+      EXPANDED_WIDTH,
+      EXPANDED_HEIGHT
+    );
+
+    // =================================
+    // RESIZABLE OFF
+    // =================================
+
+    mainWindow.setResizable(false);
+
+    // =================================
+    // GET CURRENT POSITION
+    // =================================
+
+    const [
+      currentX,
+      currentY,
+    ] = mainWindow.getPosition();
+
+    // =================================
+    // SET 700 × 700
+    // =================================
+
+    mainWindow.setBounds({
+      x: currentX,
+      y: currentY,
+      width: EXPANDED_WIDTH,
+      height: EXPANDED_HEIGHT,
+    });
+
+    // =================================
+    // TITLE BAR
+    // =================================
+
+    titleBarView.setBounds({
+
+      x: 0,
+      y: 0,
+
+      width: EXPANDED_WIDTH,
+      height: TITLEBAR_HEIGHT,
+
+    });
+
+    // =================================
+    // REACT VIEW
+    // =================================
+
+    reactView.setBounds({
+
+      x: 0,
+      y: TITLEBAR_HEIGHT,
+
+      width: EXPANDED_WIDTH,
+      height:
+        EXPANDED_HEIGHT -
+        TITLEBAR_HEIGHT,
+
+    });
+
+    console.log(
+      "WINDOW 5 EXPANDED:",
+      mainWindow.getBounds()
+    );
+
+  }
+);
+
+
+// =================================
+// WINDOW 5 - RESTORE
+// =================================
+
+ipcMain.on(
+  "window5-restore",
+  () => {
+
+    console.log(
+      "WINDOW 5 RESTORE IPC RECEIVED"
+    );
+
+    // =================================
+    // SAFETY
+    // =================================
+
+    if (
+      !mainWindow ||
+      isMiniMode
+    ) {
+      return;
+    }
+
+    // =================================
+    // RESTORE SIZE LIMIT
+    // =================================
+
+    mainWindow.setMinimumSize(
+      MINI_WIDTH,
+      MINI_HEIGHT
+    );
+
+    mainWindow.setMaximumSize(
+      NORMAL_WIDTH,
+      NORMAL_HEIGHT
+    );
+
+    // =================================
+    // GET CURRENT POSITION
+    // =================================
+
+    const [
+      currentX,
+      currentY,
+    ] = mainWindow.getPosition();
+
+    // =================================
+    // RESTORE 450 × 486
+    // =================================
+
+    mainWindow.setBounds({
+
+      x: currentX,
+      y: currentY,
+
+      width: NORMAL_WIDTH,
+      height: NORMAL_HEIGHT,
+
+    });
+
+    // =================================
+    // TITLE BAR
+    // =================================
+
+    titleBarView.setBounds({
+
+      x: 0,
+      y: 0,
+
+      width: NORMAL_WIDTH,
+      height: TITLEBAR_HEIGHT,
+
+    });
+
+    // =================================
+    // REACT VIEW
+    // =================================
+
+    reactView.setBounds({
+
+      x: 0,
+      y: TITLEBAR_HEIGHT,
+
+      width: REACT_WIDTH,
+      height: REACT_HEIGHT,
+
+    });
+
+    console.log(
+      "WINDOW 5 RESTORED:",
+      mainWindow.getBounds()
+    );
+
+  }
+);
 
 // =================================
 // MOVE MINI WINDOW
@@ -803,3 +1112,7 @@ app.on(
 
   }
 );
+
+ipcMain.handle("read-clipboard", () => {
+  return clipboard.readText();
+});

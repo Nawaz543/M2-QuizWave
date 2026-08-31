@@ -94,5 +94,33 @@ contextBridge.exposeInMainWorld(
 
     },
 
+    readClipboard: () => ipcRenderer.invoke("read-clipboard"),
+
+
+        // =============================
+    // WINDOW 5 EXPAND
+    // =============================
+
+    expandWindow5: () => {
+
+      ipcRenderer.send(
+        "window5-expand"
+      );
+
+    },
+
+
+    // =============================
+    // WINDOW 5 RESTORE
+    // =============================
+
+    restoreWindow5: () => {
+
+      ipcRenderer.send(
+        "window5-restore"
+      );
+
+    },
+
   }
 );

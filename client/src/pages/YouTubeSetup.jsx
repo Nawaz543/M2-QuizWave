@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles/Window1.css";
 import { logoutUser } from "../utils/auth";
 
+
 function YouTubeSetup() {
   const navigate = useNavigate();
   const [youtubeUrl, setYoutubeUrl] = useState("");
@@ -18,6 +19,7 @@ function YouTubeSetup() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+
 
   const extractVideoId = (url) => {
     try {
@@ -54,6 +56,21 @@ function YouTubeSetup() {
       return null;
     }
   };
+
+  const handlePaste = async () => {
+  try {
+    const text = await window.electronAPI.readClipboard();
+
+    if (text) {
+      setYoutubeUrl(text.trim());
+      setError("");
+      setSuccess("");
+    }
+  } catch (error) {
+    console.error("Clipboard Error:", error);
+    setError("Unable to read clipboard");
+  }
+};
 
   const handleConnect = async () => {
     setError("");
@@ -192,6 +209,13 @@ function YouTubeSetup() {
               }
             }}
           />
+          <button
+  type="button"
+  className="paste-btn"
+  onClick={handlePaste}
+>
+  📋
+</button>
 
         </div>
 

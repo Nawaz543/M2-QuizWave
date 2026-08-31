@@ -1081,3 +1081,79 @@
 
   transform: translateX(15px);
 }
+
+
+/* =========================================================
+   PASTE BUTTON
+========================================================= */
+
+.paste-btn {
+  height: 31px;
+  min-width: 31px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 2px;
+
+  padding: 0 9px;
+
+  flex-shrink: 0;
+
+  border: 1px solid rgba(82, 255, 240, 0.16);
+  border-radius: 7px;
+
+  background:
+    rgba(82, 255, 240, 0.045);
+
+  color: rgba(122, 255, 255, 0.82);
+
+  font-family: inherit;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  letter-spacing: 0.02em;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+
+/* Hover */
+
+.paste-btn:hover {
+  background:
+    rgba(82, 255, 240, 0.10);
+
+  border-color:
+    rgba(82, 255, 240, 0.35);
+
+  color:
+    var(--cyan-soft);
+
+  box-shadow:
+    0 0 14px rgba(82, 255, 240, 0.08);
+
+  transform: translateY(-1px);
+}
+
+
+/* Touch / Click */
+
+.paste-btn:active {
+  transform: translateY(1px);
+
+  background:
+    rgba(82, 255, 240, 0.14);
+
+  box-shadow:
+    0 0 8px rgba(82, 255, 240, 0.05);
+}

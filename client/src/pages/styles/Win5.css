@@ -1,10 +1,17 @@
 /* =========================================================
    WINDOW 5 — FINAL ANALYSIS
-   450 x 450 Optimized
+   450 x 450  → Compact
+   700 x 700  → Expanded
    Futuristic Glass / Neon UI
 ========================================================= */
 
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
 :root {
+
   --w5-bg: #030216;
 
   --w5-cyan: #52fff0;
@@ -29,6 +36,7 @@
 ========================================================= */
 
 .window5 {
+
   width: 100%;
   height: 100vh;
 
@@ -62,11 +70,13 @@
       rgba(82, 255, 240, 0.08),
       transparent 65%
     ),
+
     radial-gradient(
       500px 350px at 95% 95%,
       rgba(155, 107, 255, 0.1),
       transparent 65%
     ),
+
     radial-gradient(
       700px 500px at 50% 50%,
       #0a0920 0%,
@@ -81,15 +91,16 @@
 ========================================================= */
 
 .window5::before {
+
   content: "";
 
   position: absolute;
 
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
 
-  right: -100px;
-  top: -120px;
+  right: -120px;
+  top: -130px;
 
   border-radius: 50%;
 
@@ -101,7 +112,7 @@
       rgba(82, 255, 240, 0.04)
     );
 
-  filter: blur(35px);
+  filter: blur(40px);
 
   pointer-events: none;
 }
@@ -112,32 +123,49 @@
 ========================================================= */
 
 .window5-header {
+
   min-height: 42px;
 
   display: flex;
+
   align-items: center;
 
   gap: 9px;
 
-  margin-bottom: 10px;
   margin-top: 3px;
+  margin-bottom: 10px;
+
+  padding-bottom: 9px;
 
   position: relative;
   z-index: 2;
-
-  padding-bottom: 9px;
 
   border-bottom:
     1px solid rgba(255, 255, 255, 0.07);
 }
 
 
+/* =========================================================
+   LOGO
+========================================================= */
+
+.quizwave-logo {
+
+  width: 32px;
+  height: 32px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+}
 
 
+/* =========================================================
+   HEADER TEXT
+========================================================= */
 
-/* Header text */
+.window5-header > div:not(.header-actions) {
 
-.window5-header > div {
   min-width: 0;
 
   flex: 1;
@@ -145,6 +173,7 @@
 
 
 .window5-header h1 {
+
   margin: 0;
 
   font-size: 16px;
@@ -161,9 +190,84 @@
 
 .window5-header p {
 
+  margin: 3px 0 0;
+
   font-size: 10px;
 
   color: var(--w5-muted);
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.header-actions {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   EXPAND BUTTON
+========================================================= */
+
+.expand-window-btn {
+
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.15);
+
+  border-radius: 7px;
+
+  background:
+    rgba(255, 255, 255, 0.045);
+
+  color: var(--w5-cyan-soft);
+
+  font-family: inherit;
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+
+.expand-window-btn:hover {
+
+  background:
+    rgba(82, 255, 240, 0.09);
+
+  border-color:
+    rgba(82, 255, 240, 0.3);
+
+}
+
+
+.expand-window-btn:active {
+
+  transform: scale(0.94);
+
 }
 
 
@@ -172,6 +276,7 @@
 ========================================================= */
 
 .new-session-btn {
+
   flex-shrink: 0;
 
   height: 28px;
@@ -191,7 +296,7 @@
 
   font-family: inherit;
 
-  font-size: 12px;
+  font-size: 11px;
 
   font-weight: 600;
 
@@ -205,6 +310,7 @@
 
 
 .new-session-btn:hover {
+
   background:
     rgba(82, 255, 240, 0.09);
 
@@ -216,7 +322,9 @@
 
 
 .new-session-btn:active {
+
   transform: scale(0.96);
+
 }
 
 
@@ -225,6 +333,7 @@
 ========================================================= */
 
 .analysis-tabs {
+
   width: 100%;
 
   display: flex;
@@ -234,6 +343,7 @@
   margin-bottom: 10px;
 
   position: relative;
+
   z-index: 2;
 
   overflow-x: auto;
@@ -243,18 +353,24 @@
 
 
 .analysis-tabs::-webkit-scrollbar {
+
   display: none;
 }
 
 
+/* =========================================================
+   TAB BUTTON
+========================================================= */
+
 .tab-button {
+
   flex: 1;
 
   min-width: max-content;
 
   height: 28px;
-   margin-top: 3px;
- margin-bottom: 3px;
+
+  margin: 3px 0;
 
   padding: 0 8px;
 
@@ -278,11 +394,14 @@
   cursor: pointer;
 
   transition:
-    0.2s ease;
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 
 .tab-button:hover {
+
   color: #ffffff;
 
   background:
@@ -291,6 +410,7 @@
 
 
 .tab-button.active {
+
   color: #02020c;
 
   border-color: transparent;
@@ -312,6 +432,7 @@
 ========================================================= */
 
 .summary-card {
+
   width: 100%;
 
   box-sizing: border-box;
@@ -319,6 +440,7 @@
   padding: 11px;
 
   position: relative;
+
   z-index: 2;
 
   border-radius: 11px;
@@ -343,14 +465,16 @@
 ========================================================= */
 
 .title-section {
+
   margin-bottom: 10px;
 }
 
 
 .label {
+
   display: block;
 
-
+  margin-bottom: 3px;
 
   font-size: 10px;
 
@@ -362,6 +486,7 @@
 
 
 .title-section h2 {
+
   margin: 0;
 
   font-size: 13px;
@@ -387,6 +512,7 @@
 ========================================================= */
 
 .stats-grid {
+
   display: grid;
 
   grid-template-columns:
@@ -397,6 +523,7 @@
 
 
 .stat-box {
+
   min-height: 32px;
 
   box-sizing: border-box;
@@ -420,6 +547,7 @@
 
 
 .stat-box span {
+
   font-size: 11px;
 
   color:
@@ -428,6 +556,7 @@
 
 
 .stat-box strong {
+
   font-size: 15px;
 
   color: #eaf6ff;
@@ -437,12 +566,14 @@
 /* Correct */
 
 .stat-box.correct {
+
   border-color:
     rgba(82, 230, 161, 0.1);
 }
 
 
 .stat-box.correct strong {
+
   color: var(--w5-green);
 
   text-shadow:
@@ -453,12 +584,14 @@
 /* Incorrect */
 
 .stat-box.incorrect {
+
   border-color:
     rgba(255, 104, 120, 0.1);
 }
 
 
 .stat-box.incorrect strong {
+
   color: var(--w5-red);
 
   text-shadow:
@@ -471,6 +604,7 @@
 ========================================================= */
 
 .accuracy-box {
+
   margin-top: 7px;
 
   padding: 8px 9px;
@@ -492,6 +626,7 @@
 
 
 .accuracy-box span {
+
   font-size: 12px;
 
   color:
@@ -500,6 +635,7 @@
 
 
 .accuracy-box strong {
+
   font-size: 16px;
 
   color: var(--w5-cyan-soft);
@@ -514,6 +650,7 @@
 ========================================================= */
 
 .date-time {
+
   display: grid;
 
   grid-template-columns:
@@ -526,6 +663,7 @@
 
 
 .date-time > div {
+
   padding: 7px;
 
   border-radius: 7px;
@@ -539,11 +677,12 @@
 
 
 .date-time span {
+
   display: block;
 
   margin-bottom: 3px;
 
-  font-size: 11px;
+  font-size: 10px;
 
   color:
     rgba(220, 235, 255, 0.35);
@@ -553,8 +692,11 @@
 
 
 .date-time strong {
+
   font-size: 12px;
-font-weight: 600;
+
+  font-weight: 600;
+
   color:
     rgba(235, 245, 255, 0.8);
 }
@@ -565,18 +707,23 @@ font-weight: 600;
 ========================================================= */
 
 .tab-content {
+
   width: 100%;
 
   position: relative;
+
   z-index: 2;
 
   min-height: 0;
 
   flex: 1;
+
+  overflow: hidden;
 }
 
 
 .slide-in {
+
   animation:
     slideIn 0.25s ease;
 }
@@ -585,6 +732,7 @@ font-weight: 600;
 @keyframes slideIn {
 
   from {
+
     opacity: 0;
 
     transform:
@@ -592,12 +740,12 @@ font-weight: 600;
   }
 
   to {
+
     opacity: 1;
 
     transform:
       translateX(0);
   }
-
 }
 
 
@@ -608,7 +756,10 @@ font-weight: 600;
 .toppers-section,
 .ranking-section,
 .question-stats-section {
+
   width: 100%;
+
+  height: 100%;
 
   box-sizing: border-box;
 
@@ -625,6 +776,8 @@ font-weight: 600;
 
   border:
     1px solid rgba(255, 255, 255, 0.07);
+
+  overflow: hidden;
 }
 
 
@@ -633,6 +786,7 @@ font-weight: 600;
 ========================================================= */
 
 .section-title {
+
   display: flex;
 
   justify-content: space-between;
@@ -644,6 +798,7 @@ font-weight: 600;
 
 
 .section-title h2 {
+
   margin: 0;
 
   font-size: 12px;
@@ -653,7 +808,8 @@ font-weight: 600;
 
 
 .section-title span {
-  font-size: 11px;
+
+  font-size: 10px;
 
   color:
     rgba(220, 235, 255, 0.38);
@@ -669,13 +825,14 @@ font-weight: 600;
 ========================================================= */
 
 .toppers-list {
+
   display: flex;
 
   flex-direction: column;
 
   gap: 5px;
 
-  max-height: 245px;
+  height: calc(100% - 30px);
 
   overflow-y: auto;
 
@@ -684,16 +841,18 @@ font-weight: 600;
 
 
 .toppers-list::-webkit-scrollbar {
+
   display: none;
 }
 
 
-/* Topper Item */
+/* =========================================================
+   TOPPER ITEM
+========================================================= */
 
 .topper-item {
-  min-height: 32px;
 
-  
+  min-height: 32px;
 
   display: flex;
 
@@ -716,6 +875,7 @@ font-weight: 600;
 /* Rank */
 
 .topper-rank {
+
   min-width: 27px;
 
   color: var(--w5-cyan-soft);
@@ -731,6 +891,7 @@ font-weight: 600;
 /* Info */
 
 .topper-info {
+
   flex: 1;
 
   min-width: 0;
@@ -738,6 +899,7 @@ font-weight: 600;
 
 
 .topper-info strong {
+
   display: block;
 
   overflow: hidden;
@@ -753,6 +915,7 @@ font-weight: 600;
 
 
 .topper-info span {
+
   display: block;
 
   margin-top: 2px;
@@ -767,7 +930,8 @@ font-weight: 600;
 /* Time */
 
 .response-time {
-  font-size: 8px;
+
+  font-size: 10px;
 
   color:
     rgba(220, 235, 255, 0.5);
@@ -781,13 +945,14 @@ font-weight: 600;
 ========================================================= */
 
 .ranking-list {
+
   display: flex;
 
   flex-direction: column;
 
   gap: 5px;
 
-  max-height: 245px;
+  height: calc(100% - 30px);
 
   overflow-y: auto;
 
@@ -796,13 +961,16 @@ font-weight: 600;
 
 
 .ranking-list::-webkit-scrollbar {
+
   display: none;
 }
 
 
-.ranking-item {
-  min-height: 35px;
+/* Ranking Item */
 
+.ranking-item {
+
+  min-height: 35px;
 
   display: flex;
 
@@ -825,6 +993,7 @@ font-weight: 600;
 /* Position */
 
 .ranking-position {
+
   min-width: 27px;
 
   color: var(--w5-cyan-soft);
@@ -840,6 +1009,7 @@ font-weight: 600;
 /* Student */
 
 .ranking-info {
+
   flex: 1;
 
   min-width: 0;
@@ -847,6 +1017,7 @@ font-weight: 600;
 
 
 .ranking-info strong {
+
   display: block;
 
   overflow: hidden;
@@ -856,11 +1027,15 @@ font-weight: 600;
   white-space: nowrap;
 
   font-size: 13px;
-  letter-spacing: 0.1em;
+
+  color: #eaf6ff;
+
+  letter-spacing: 0.04em;
 }
 
 
 .ranking-info span {
+
   display: block;
 
   margin-top: 2px;
@@ -875,11 +1050,12 @@ font-weight: 600;
 /* Score */
 
 .performance-score {
+
   min-width: 35px;
 
   text-align: right;
 
-  font-size: 11px;
+  font-size: 12px;
 
   font-weight: 800;
 
@@ -892,7 +1068,8 @@ font-weight: 600;
 ========================================================= */
 
 .question-stats-list {
-  max-height: 245px;
+
+  height: calc(100% - 30px);
 
   overflow-y: auto;
 
@@ -907,11 +1084,15 @@ font-weight: 600;
 
 
 .question-stats-list::-webkit-scrollbar {
+
   display: none;
 }
 
 
+/* Question Card */
+
 .question-stat-card {
+
   padding: 8px;
 
   border-radius: 8px;
@@ -927,6 +1108,7 @@ font-weight: 600;
 /* Header */
 
 .question-stat-header {
+
   display: flex;
 
   justify-content: space-between;
@@ -938,6 +1120,7 @@ font-weight: 600;
 
 
 .question-stat-header strong {
+
   font-size: 13px;
 
   color: var(--w5-cyan-soft);
@@ -945,6 +1128,7 @@ font-weight: 600;
 
 
 .question-stat-header span {
+
   font-size: 10px;
 
   color:
@@ -954,9 +1138,10 @@ font-weight: 600;
 }
 
 
-/* Correct answer */
+/* Correct Answer */
 
 .correct-answer {
+
   display: flex;
 
   align-items: center;
@@ -978,7 +1163,8 @@ font-weight: 600;
 
 
 .correct-answer span {
-  font-size: 12px;
+
+  font-size: 11px;
 
   color:
     rgba(220, 235, 255, 0.4);
@@ -986,6 +1172,7 @@ font-weight: 600;
 
 
 .correct-answer strong {
+
   font-size: 14px;
 
   color: var(--w5-green);
@@ -995,6 +1182,7 @@ font-weight: 600;
 /* Stats */
 
 .question-stat-grid {
+
   display: grid;
 
   grid-template-columns:
@@ -1005,6 +1193,7 @@ font-weight: 600;
 
 
 .question-stat-grid div {
+
   padding: 5px 2px;
 
   text-align: center;
@@ -1017,9 +1206,10 @@ font-weight: 600;
 
 
 .question-stat-grid span {
+
   display: block;
 
-  font-size: 11px;
+  font-size: 10px;
 
   color:
     rgba(220, 235, 255, 0.35);
@@ -1027,6 +1217,7 @@ font-weight: 600;
 
 
 .question-stat-grid strong {
+
   display: block;
 
   margin-top: 2px;
@@ -1042,6 +1233,7 @@ font-weight: 600;
 ========================================================= */
 
 .empty-state {
+
   display: flex;
 
   align-items: center;
@@ -1054,7 +1246,7 @@ font-weight: 600;
 
   text-align: center;
 
-  font-size: 9px;
+  font-size: 10px;
 
   color:
     rgba(220, 235, 255, 0.35);
@@ -1067,6 +1259,7 @@ font-weight: 600;
 
 .loading-screen,
 .error-screen {
+
   width: 100%;
   height: 100%;
 
@@ -1086,61 +1279,515 @@ font-weight: 600;
 
 
 /* =========================================================
-   COMING SECTION
+   EXPANDED MODE
+   ELECTRON WINDOW = 700 x 700
 ========================================================= */
 
-.coming-section {
-  height: 210px;
+@media (min-width: 600px) {
 
-  display: flex;
+  .window5 {
 
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-  text-align: center;
-
-  border-radius: 10px;
-
-  background:
-    rgba(255, 255, 255, 0.03);
-
-  border:
-    1px solid rgba(255, 255, 255, 0.06);
-}
+    padding: 22px;
+  }
 
 
-.coming-section h2 {
-  margin: 0 0 7px;
+  /* =================================
+     HEADER
+  ================================= */
 
-  font-size: 14px;
-}
+  .window5-header {
+
+    min-height: 58px;
+
+    gap: 13px;
+
+    margin-top: 2px;
+
+    margin-bottom: 16px;
+
+    padding-bottom: 13px;
+  }
 
 
-.coming-section p {
-  margin: 0;
+  .quizwave-logo {
 
-  font-size: 9px;
+    width: 44px;
+    height: 44px;
+  }
 
-  color:
-    rgba(220, 235, 255, 0.4);
+
+  .window5-header h1 {
+
+    font-size: 23px;
+
+    letter-spacing: 0.045em;
+  }
+
+
+  .window5-header p {
+
+    margin-top: 5px;
+
+    font-size: 12px;
+  }
+
+
+  /* =================================
+     HEADER BUTTONS
+  ================================= */
+
+  .header-actions {
+
+    gap: 9px;
+  }
+
+
+  .expand-window-btn {
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 9px;
+
+    font-size: 19px;
+  }
+
+
+  .new-session-btn {
+
+    height: 38px;
+
+    padding: 0 14px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+  }
+
+
+  /* =================================
+     TABS
+  ================================= */
+
+  .analysis-tabs {
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+  }
+
+
+  .tab-button {
+
+    height: 38px;
+
+    margin: 2px 0;
+
+    padding: 0 15px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+  }
+
+
+  /* =================================
+     SUMMARY
+  ================================= */
+
+  .summary-card {
+
+    padding: 18px;
+
+    border-radius: 14px;
+  }
+
+
+  .title-section {
+
+    margin-bottom: 16px;
+  }
+
+
+  .label {
+
+    margin-bottom: 5px;
+
+    font-size: 11px;
+  }
+
+
+  .title-section h2 {
+
+    font-size: 19px;
+
+    line-height: 1.4;
+  }
+
+
+  /* =================================
+     STATS
+  ================================= */
+
+  .stats-grid {
+
+    gap: 10px;
+  }
+
+
+  .stat-box {
+
+    min-height: 52px;
+
+    padding: 10px 13px;
+
+    border-radius: 9px;
+  }
+
+
+  .stat-box span {
+
+    font-size: 13px;
+  }
+
+
+  .stat-box strong {
+
+    font-size: 21px;
+  }
+
+
+  /* =================================
+     ACCURACY
+  ================================= */
+
+  .accuracy-box {
+
+    margin-top: 10px;
+
+    padding: 12px 14px;
+
+    border-radius: 9px;
+  }
+
+
+  .accuracy-box span {
+
+    font-size: 14px;
+  }
+
+
+  .accuracy-box strong {
+
+    font-size: 23px;
+  }
+
+
+  /* =================================
+     DATE / TIME
+  ================================= */
+
+  .date-time {
+
+    gap: 10px;
+
+    margin-top: 10px;
+  }
+
+
+  .date-time > div {
+
+    padding: 10px;
+
+    border-radius: 9px;
+  }
+
+
+  .date-time span {
+
+    margin-bottom: 4px;
+
+    font-size: 10px;
+  }
+
+
+  .date-time strong {
+
+    font-size: 13px;
+  }
+
+
+  /* =================================
+     SECTION
+  ================================= */
+
+  .toppers-section,
+  .ranking-section,
+  .question-stats-section {
+
+    padding: 14px;
+
+    border-radius: 13px;
+  }
+
+
+  /* =================================
+     SECTION TITLE
+  ================================= */
+
+  .section-title {
+
+    margin-bottom: 11px;
+  }
+
+
+  .section-title h2 {
+
+    font-size: 17px;
+  }
+
+
+  .section-title span {
+
+    font-size: 11px;
+  }
+
+
+  /* =================================
+     TOPPERS
+  ================================= */
+
+  .toppers-list {
+
+    gap: 7px;
+
+    height: calc(100% - 40px);
+  }
+
+
+  .topper-item {
+
+    min-height: 47px;
+
+    gap: 11px;
+
+    padding: 9px 11px;
+
+    border-radius: 9px;
+  }
+
+
+  .topper-rank {
+
+    min-width: 38px;
+
+    font-size: 16px;
+  }
+
+
+  .topper-info strong {
+
+    font-size: 15px;
+  }
+
+
+  .topper-info span {
+
+    margin-top: 3px;
+
+    font-size: 11px;
+  }
+
+
+  .response-time {
+
+    font-size: 11px;
+  }
+
+
+  /* =================================
+     RANKING
+  ================================= */
+
+  .ranking-list {
+
+    gap: 7px;
+
+    height: calc(100% - 40px);
+  }
+
+
+  .ranking-item {
+
+    min-height: 48px;
+
+    gap: 11px;
+
+    padding: 9px 11px;
+
+    border-radius: 9px;
+  }
+
+
+  .ranking-position {
+
+    min-width: 38px;
+
+    font-size: 16px;
+  }
+
+
+  .ranking-info strong {
+
+    font-size: 15px;
+
+    letter-spacing: 0.03em;
+  }
+
+
+  .ranking-info span {
+
+    margin-top: 3px;
+
+    font-size: 11px;
+  }
+
+
+  .performance-score {
+
+    min-width: 50px;
+
+    font-size: 15px;
+  }
+
+
+  /* =================================
+     QUESTION STATS
+  ================================= */
+
+  .question-stats-list {
+
+    gap: 9px;
+
+    height: calc(100% - 40px);
+  }
+
+
+  .question-stat-card {
+
+    padding: 12px;
+
+    border-radius: 10px;
+  }
+
+
+  .question-stat-header {
+
+    margin-bottom: 9px;
+  }
+
+
+  .question-stat-header strong {
+
+    font-size: 16px;
+  }
+
+
+  .question-stat-header span {
+
+    font-size: 11px;
+  }
+
+
+  .correct-answer {
+
+    padding: 9px 10px;
+
+    margin-bottom: 9px;
+
+    border-radius: 8px;
+  }
+
+
+  .correct-answer span {
+
+    font-size: 13px;
+  }
+
+
+  .correct-answer strong {
+
+    font-size: 17px;
+  }
+
+
+  .question-stat-grid {
+
+    gap: 7px;
+  }
+
+
+  .question-stat-grid div {
+
+    padding: 8px 4px;
+
+    border-radius: 7px;
+  }
+
+
+  .question-stat-grid span {
+
+    font-size: 11px;
+  }
+
+
+  .question-stat-grid strong {
+
+    margin-top: 3px;
+
+    font-size: 15px;
+  }
+
+
+  /* =================================
+     EMPTY
+  ================================= */
+
+  .empty-state {
+
+    min-height: 150px;
+
+    font-size: 12px;
+  }
+
+
+  /* =================================
+     LOADING / ERROR
+  ================================= */
+
+  .loading-screen,
+  .error-screen {
+
+    font-size: 13px;
+  }
+
 }
 
 
 /* =========================================================
-   SMALL WINDOW
+   EXTRA SMALL WIDTH SAFETY
 ========================================================= */
 
 @media (max-width: 400px) {
 
   .window5 {
+
     padding: 11px;
   }
 
 
   .window5-header {
+
     min-height: 38px;
 
     gap: 7px;
@@ -1149,20 +1796,42 @@ font-weight: 600;
   }
 
 
-  
+  .quizwave-logo {
+
+    width: 28px;
+    height: 28px;
+  }
 
 
   .window5-header h1 {
+
     font-size: 13px;
   }
 
 
   .window5-header p {
+
     font-size: 8px;
   }
 
 
+  .header-actions {
+
+    gap: 4px;
+  }
+
+
+  .expand-window-btn {
+
+    width: 26px;
+    height: 26px;
+
+    font-size: 13px;
+  }
+
+
   .new-session-btn {
+
     height: 26px;
 
     padding: 0 7px;
@@ -1172,6 +1841,7 @@ font-weight: 600;
 
 
   .analysis-tabs {
+
     gap: 4px;
 
     margin-bottom: 8px;
@@ -1179,9 +1849,11 @@ font-weight: 600;
 
 
   .tab-button {
+
     height: 26px;
- margin-top: 3px;
- margin-bottom: 3px;
+
+    margin: 3px 0;
+
     padding: 0 7px;
 
     font-size: 7px;
@@ -1189,21 +1861,25 @@ font-weight: 600;
 
 
   .summary-card {
+
     padding: 9px;
   }
 
 
   .title-section {
+
     margin-bottom: 8px;
   }
 
 
   .stats-grid {
+
     gap: 5px;
   }
 
 
   .stat-box {
+
     min-height: 29px;
 
     padding: 5px 7px;
@@ -1211,36 +1887,43 @@ font-weight: 600;
 
 
   .stat-box span {
+
     font-size: 7px;
   }
 
 
   .stat-box strong {
+
     font-size: 15px;
   }
 
 
   .accuracy-box {
+
     padding: 7px 8px;
   }
 
 
   .accuracy-box strong {
+
     font-size: 14px;
   }
 
 
   .date-time {
+
     gap: 5px;
   }
 
 
   .date-time > div {
+
     padding: 6px;
   }
 
 
   .date-time strong {
+
     font-size: 8px;
   }
 
@@ -1248,6 +1931,7 @@ font-weight: 600;
   .toppers-section,
   .ranking-section,
   .question-stats-section {
+
     padding: 8px;
   }
 
@@ -1255,65 +1939,8 @@ font-weight: 600;
   .toppers-list,
   .ranking-list,
   .question-stats-list {
-    max-height: 230px;
+
+    height: calc(100% - 30px);
   }
-}
-
-/* =================================
-   HEADER ACTIONS
-================================= */
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-
-/* =================================
-   EXPAND WINDOW BUTTON
-================================= */
-
-.expand-window-btn {
-  width: 36px;
-  height: 36px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid rgba(255, 255, 255, 0.15);
-
-  border-radius: 8px;
-
-  background: rgba(255, 255, 255, 0.06);
-
-  color: #ffffff;
-
-  font-size: 18px;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease,
-    border-color 0.2s ease;
-}
-
-
-.expand-window-btn:hover {
-
-  background: rgba(255, 255, 255, 0.12);
-
-  border-color: rgba(255, 255, 255, 0.3);
-
-  transform: scale(1.05);
-
-}
-
-
-.expand-window-btn:active {
-
-  transform: scale(0.95);
 
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "./styles/Window5.css";
+import "./styles/Win5.css";
 
 function Window5() {
 
@@ -24,6 +24,7 @@ function Window5() {
   const [ranking, setRanking] = useState([]);
   const [questionStats, setQuestionStats] = useState([]);
   const [activeTab, setActiveTab] = useState("summary");
+  const [isExpanded, setIsExpanded] = useState(false);
 
 
   // ========================================
@@ -400,14 +401,47 @@ const trimTitle = (title, wordLimit ) => {
     </p>
   </div>
 
+  <div className="header-actions">
+
+  <button
+    className="expand-window-btn"
+    onClick={() => {
+
+      if (isExpanded) {
+
+        window.electronAPI.restoreWindow5();
+
+        setIsExpanded(false);
+
+      } else {
+
+        window.electronAPI.expandWindow5();
+
+        setIsExpanded(true);
+
+      }
+
+    }}
+    title={
+      isExpanded
+        ? "Restore window"
+        : "Expand window"
+    }
+  >
+    {isExpanded ? "⛶" : "⛶"}
+  </button>
+
+
   <button
     className="new-session-btn"
     onClick={handleNewSession}
   >
     {loading
-              ? "Wait a min..."
-              : "New Session →"}
+      ? "Wait a min..."
+      : "New Session →"}
   </button>
+
+</div>
 
 </div>
 
